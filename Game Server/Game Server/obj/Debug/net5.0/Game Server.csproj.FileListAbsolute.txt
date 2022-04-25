@@ -1,0 +1,46 @@
+D:\Portfolio\Game Server\Game Server\obj\Debug\net5.0\Game Server.csproj.AssemblyReference.cache
+D:\Portfolio\Game Server\Game Server\obj\Debug\net5.0\Game Server.GeneratedMSBuildEditorConfig.editorconfig
+D:\Portfolio\Game Server\Game Server\obj\Debug\net5.0\Game Server.AssemblyInfoInputs.cache
+D:\Portfolio\Game Server\Game Server\obj\Debug\net5.0\Game Server.AssemblyInfo.cs
+D:\Portfolio\Game Server\Game Server\obj\Debug\net5.0\Game Server.csproj.CoreCompileInputs.cache
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\Game Server.exe
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\Game Server.deps.json
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\Game Server.runtimeconfig.json
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\Game Server.runtimeconfig.dev.json
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\Game Server.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\ref\Game Server.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\Game Server.pdb
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\Microsoft.Bcl.AsyncInterfaces.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\Microsoft.Extensions.ObjectPool.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\Microsoft.Win32.SystemEvents.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\System.Drawing.Common.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\System.Private.ServiceModel.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\System.Security.Cryptography.Pkcs.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\System.Security.Cryptography.Xml.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\System.Security.Permissions.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\System.ServiceModel.Primitives.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\System.ServiceModel.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\System.Windows.Extensions.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\cs\System.Private.ServiceModel.resources.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\de\System.Private.ServiceModel.resources.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\es\System.Private.ServiceModel.resources.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\fr\System.Private.ServiceModel.resources.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\it\System.Private.ServiceModel.resources.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\ja\System.Private.ServiceModel.resources.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\ko\System.Private.ServiceModel.resources.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\pl\System.Private.ServiceModel.resources.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\pt-BR\System.Private.ServiceModel.resources.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\ru\System.Private.ServiceModel.resources.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\tr\System.Private.ServiceModel.resources.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\zh-Hans\System.Private.ServiceModel.resources.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\zh-Hant\System.Private.ServiceModel.resources.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\runtimes\win\lib\netcoreapp3.0\Microsoft.Win32.SystemEvents.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\runtimes\unix\lib\netcoreapp3.0\System.Drawing.Common.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\runtimes\win\lib\netcoreapp3.0\System.Drawing.Common.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\runtimes\win\lib\netcoreapp3.0\System.Security.Cryptography.Pkcs.dll
+D:\Portfolio\Game Server\Game Server\bin\Debug\net5.0\runtimes\win\lib\netcoreapp3.0\System.Windows.Extensions.dll
+D:\Portfolio\Game Server\Game Server\obj\Debug\net5.0\Game Server.csproj.CopyComplete
+D:\Portfolio\Game Server\Game Server\obj\Debug\net5.0\Game Server.dll
+D:\Portfolio\Game Server\Game Server\obj\Debug\net5.0\ref\Game Server.dll
+D:\Portfolio\Game Server\Game Server\obj\Debug\net5.0\Game Server.pdb
+D:\Portfolio\Game Server\Game Server\obj\Debug\net5.0\Game Server.genruntimeconfig.cache
