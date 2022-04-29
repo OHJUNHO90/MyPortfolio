@@ -1,0 +1,21 @@
+
+
+ 			SELECT
+				A.CD_GRP,
+				A.CD,
+				NVL(B.CD_NM, A.CD_NM) AS CD_NM,
+				A.UP_CD,
+				A.CD_VAL,
+				A.USE_YN,
+				A.SORT_NO,
+				A.CD_DESC,
+				A.REG_DT,
+				A.UPD_DT
+			FROM TB_ST_CD A
+			LEFT JOIN TB_ST_CD_MSG B
+			ON
+				A.CD_GRP = B.CD_GRP
+				AND A.CD = B.CD
+				AND B.LANG_CD = 'ko'
+			WHERE A.CD_GRP = 'VC_POINT_INFO'
+			AND A.USE_YN = 'Y'
