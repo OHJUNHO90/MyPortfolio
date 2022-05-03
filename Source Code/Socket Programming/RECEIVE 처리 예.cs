@@ -9,7 +9,7 @@ public void Receive()
 
 		while (msg != null)
 		{
-			List<VCCSocketIO> sioList = new List<VCCSocketIO>();
+			List<SocketIO> sioList = new List<SocketIO>();
 
 			string msgId = string.Empty;
 			msg.GetHeader<string>("MSG_ID", ref msgId);
@@ -19,7 +19,7 @@ public void Receive()
 			
 		   
 
-			foreach (VCCSocketIO sio in sioList)
+			foreach (SocketIO sio in sioList)
 			{
 				string className = string.Empty;
 				string eventName = string.Empty;
@@ -40,10 +40,12 @@ public void Receive()
 
 				if (node != null)
 				{
+					/*다이렉트 이벤트 발생, 직접 실행*/
 					node.Excute(eventArgs);
 				}
 				else
 				{
+					/*옵저버 패턴, 버블링 이벤트 발생)*/
 					MainSubject.Instance.Excute(eventArgs);
 				}
 				
@@ -55,7 +57,7 @@ public void Receive()
 
 						for (int j = 0; j < list.Count; j++)
 						{
-							List<VCCSocketIO> outEvent = socketOutList.FindAll(t => t.socket_out_seq.ToString().Equals(list[j].SK_OUT_SEQ));
+							List<SocketIO> outEvent = socketOutList.FindAll(t => t.socket_out_seq.ToString().Equals(list[j].SK_OUT_SEQ));
 							if (1 == outEvent.Count) {
 
 								MethodInfo Info = node.GetType().GetMethod(outEvent[0].outMsgID,
