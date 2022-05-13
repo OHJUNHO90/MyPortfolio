@@ -16,5 +16,64 @@ namespace VirusWarGameServer
         public Socket socket { get; set; }
         public SocketAsyncEventArgs receiveEventArgs { get; private set; }
         public SocketAsyncEventArgs sendEventArgs { get; private set; }
+
+        MessageResolver messageResolver;
+        public UserToken()
+        {
+            messageResolver = new MessageResolver();
+        }
+
+        public void SetEventArgs(SocketAsyncEventArgs receiveEventArgs, SocketAsyncEventArgs sendEventArgs)
+        {
+            this.receiveEventArgs = receiveEventArgs;
+            this.sendEventArgs = sendEventArgs;
+        }
+
+        public void BeginReceive()
+        {
+            bool pending = socket.ReceiveAsync(receiveEventArgs);
+
+            //동기로 완료될 경우 직접 이벤트 처리 함수 호출.
+            if (!pending)
+            {   
+                ReceiveEventProcessing();
+            }
+        }
+
+
+        /*수신 완료 이벤트*/
+        public void OnReceiveCompleted(object sender, SocketAsyncEventArgs e)
+        {
+            Console.WriteLine("OnReceiveCompleted");
+            ReceiveEventProcessing();
+        }
+
+        void ReceiveEventProcessing()
+        {
+            //이벤트 처리
+            if (receiveEventArgs.BytesTransferred > 0 && receiveEventArgs.SocketError == SocketError.Success)
+            {
+                messageResolver.ReadByte(receiveEventArgs.Buffer, receiveEventArgs.Offset, receiveEventArgs.BytesTransferred,
+                                         ReceiveEventProcessing);
+            }
+            else
+            {
+                Console.WriteLine(string.Format("error {0},  transferred {1}", receiveEventArgs.SocketError, receiveEventArgs.BytesTransferred));
+            }
+        }
+
+        void ReceiveEventProcessing(Const<byte[]> array)
+        {
+            //    
+            Console.WriteLine("ReceiveEventProcessing");
+        }
+
+        
+        /*전송 완료 이벤트*/
+        public void OnSendCompleted(object sender, SocketAsyncEventArgs e)
+        {
+            Console.WriteLine("OnSendCompleted");
+        }
+
     }
 }

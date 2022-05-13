@@ -10,10 +10,12 @@ using System.Threading.Tasks;
 namespace VirusWarGameServer
 {
     // -- 버퍼 셋팅
-    // 소켓 셋팅
-    //// bind, listen, accept
-    //// 클라이언트 접속
-    //// 클라이언트 접속 종료
+    // -- 소켓 셋팅
+    // -- bind, listen, accept
+    // -- 클라이언트 접속
+    // 비동기 receive 처리
+    // 비동기 send 처리
+    // 클라이언트 접속 종료
 
     // 패킷 수신
     // 패킷 처리
@@ -53,34 +55,34 @@ namespace VirusWarGameServer
             AllocateSendEventArgsPool();
         }
 
+        //TO DO: 비슷한 비지니스 로직으로 구현됨, 리팩토링 필요 
         void AllocateReceiveEventArgsPool()
         {
             receiveEventArgsPool = new SocketAsyncEventArgsPool(MAX_CONNECTIONS_COUNT);
 
             for (int i = 0; i < MAX_CONNECTIONS_COUNT; i++)
             {
-                receiveEventArgsPool.Push(AllocateSocketAsyncEventArg());
+                SocketAsyncEventArgs arg = new SocketAsyncEventArgs();
+                UserToken token = new UserToken();
+                arg.Completed += new EventHandler<SocketAsyncEventArgs>(token.OnReceiveCompleted);
+                arg.UserToken = token;
+                bufferManager.SetBuffer(arg);
+                receiveEventArgsPool.Push(arg);
             }
         }
-
+        //TO DO: 비슷한 비지니스 로직으로 구현됨, 리팩토링 필요 
         void AllocateSendEventArgsPool()
         {
             sendEventArgsPool = new SocketAsyncEventArgsPool(MAX_CONNECTIONS_COUNT);
             for (int i = 0; i < MAX_CONNECTIONS_COUNT; i++)
             {
-                sendEventArgsPool.Push(AllocateSocketAsyncEventArg());
+                SocketAsyncEventArgs arg = new SocketAsyncEventArgs();
+                UserToken token = new UserToken();
+                arg.Completed += new EventHandler<SocketAsyncEventArgs>(token.OnSendCompleted);
+                arg.UserToken = token;
+                bufferManager.SetBuffer(arg);
+                sendEventArgsPool.Push(arg);
             }
-        }
-
-        SocketAsyncEventArgs AllocateSocketAsyncEventArg()
-        {
-            SocketAsyncEventArgs arg = new SocketAsyncEventArgs();
-            UserToken token = new UserToken();
-            arg.Completed  += new EventHandler<SocketAsyncEventArgs>(OnReceiveCompleted);
-            arg.UserToken = token;
-            bufferManager.SetBuffer(arg);
-
-            return arg;
         }
 
         public void Start()
@@ -150,24 +152,23 @@ namespace VirusWarGameServer
                 /*TO DO: Accept 실패 처리 필요*/
             }
 
+            // 스레드 차단 해제
             autoResetEventAccept.Set();
         }
 
         void OnNewClient(Socket client, object token)
         {
             Console.WriteLine(string.Format("[{0}] A client connected. handle {1}", Thread.CurrentThread.ManagedThreadId, client.Handle));
-        }
 
-        /*수신 완료 이벤트*/
-        void OnReceiveCompleted(object sender, SocketAsyncEventArgs e)
-        { 
-            
-        }
+            SocketAsyncEventArgs receiveArgs = receiveEventArgsPool.Pop();
+            SocketAsyncEventArgs sendArgs    = sendEventArgsPool.Pop();
 
-        /*전송 완료 이벤트*/
-        void OnSendCompleted(object sender, SocketAsyncEventArgs e)
-        {
+            UserToken userToken = receiveArgs.UserToken as UserToken;
+            userToken.SetEventArgs(receiveArgs, sendArgs);
 
+            // 생성된 클라이언트 소켓을 보관하여 전송 및 수신에 비동기로 사용.
+            userToken.socket = client;
+            userToken.BeginReceive();
         }
     }
 }
