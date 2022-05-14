@@ -25,64 +25,12 @@ namespace VirusWarGameServer
         AutoResetEvent autoResetEventAccept;
         SocketAsyncEventArgs acceptAsyncEventArgs;
 
-        private const short MAX_CONNECTIONS_COUNT = 10000;
-        private const short BUFFER_SIZE = 1024;
-        // READ, WRITE 
-        private const byte ALLOTMENT_COUNT = 2;
         private const int PORT = 7979;
         private const int BACKLOG = 100;
 
-        SocketAsyncEventArgsPool receiveEventArgsPool;
-        SocketAsyncEventArgsPool sendEventArgsPool;
-        BufferManager bufferManager;
-
         public TcpServer()
         {
-            InitBufferManager();
-            InitEventArgsPool();
-        }
-
-        void InitBufferManager()
-        {
-            //버퍼 할당, 버퍼의 크기는 동시 접속자 수 * 하나의 버퍼 크기 * READ, WRITE
-            bufferManager = new BufferManager(MAX_CONNECTIONS_COUNT * BUFFER_SIZE * ALLOTMENT_COUNT, BUFFER_SIZE);
-            bufferManager.InitBuffer();
-        }
-
-        void InitEventArgsPool()
-        {
-            AllocateReceiveEventArgsPool();
-            AllocateSendEventArgsPool();
-        }
-
-        //TO DO: 비슷한 비지니스 로직으로 구현됨, 리팩토링 필요 
-        void AllocateReceiveEventArgsPool()
-        {
-            receiveEventArgsPool = new SocketAsyncEventArgsPool(MAX_CONNECTIONS_COUNT);
-
-            for (int i = 0; i < MAX_CONNECTIONS_COUNT; i++)
-            {
-                SocketAsyncEventArgs arg = new SocketAsyncEventArgs();
-                UserToken token = new UserToken();
-                arg.Completed += new EventHandler<SocketAsyncEventArgs>(token.OnReceiveCompleted);
-                arg.UserToken = token;
-                bufferManager.SetBuffer(arg);
-                receiveEventArgsPool.Push(arg);
-            }
-        }
-        //TO DO: 비슷한 비지니스 로직으로 구현됨, 리팩토링 필요 
-        void AllocateSendEventArgsPool()
-        {
-            sendEventArgsPool = new SocketAsyncEventArgsPool(MAX_CONNECTIONS_COUNT);
-            for (int i = 0; i < MAX_CONNECTIONS_COUNT; i++)
-            {
-                SocketAsyncEventArgs arg = new SocketAsyncEventArgs();
-                UserToken token = new UserToken();
-                arg.Completed += new EventHandler<SocketAsyncEventArgs>(token.OnSendCompleted);
-                arg.UserToken = token;
-                bufferManager.SetBuffer(arg);
-                sendEventArgsPool.Push(arg);
-            }
+            SocketAsyncEventArgsPoolManager.Instance.Initialize();
         }
 
         public void Start()
@@ -99,7 +47,7 @@ namespace VirusWarGameServer
                 acceptAsyncEventArgs = new SocketAsyncEventArgs();
                 acceptAsyncEventArgs.Completed += new EventHandler<SocketAsyncEventArgs>(OnAcceptCompleted);
 
-                Thread thread = new Thread(Accept);
+                Thread thread = new Thread(Listen);
                 thread.Start();
             }
             catch (Exception e)
@@ -110,7 +58,7 @@ namespace VirusWarGameServer
         } 
 
 
-        void Accept()
+        void Listen()
         {
             autoResetEventAccept = new AutoResetEvent(false);
 
@@ -145,7 +93,17 @@ namespace VirusWarGameServer
         {
             if (e.SocketError == SocketError.Success)
             {
-                OnNewClient(e.AcceptSocket, e.UserToken);
+                Console.WriteLine(string.Format("[{0}] A client connected. handle {1}", Thread.CurrentThread.ManagedThreadId, e.AcceptSocket.Handle));
+
+                SocketAsyncEventArgs receiveArgs = SocketAsyncEventArgsPoolManager.Instance.PopReceiveEventArg();
+                SocketAsyncEventArgs sendArgs    = SocketAsyncEventArgsPoolManager.Instance.PopSendEventArg();
+
+                UserToken userToken = receiveArgs.UserToken as UserToken;
+                userToken.SetEventArgs(receiveArgs, sendArgs);
+
+                // 생성된 클라이언트 소켓을 보관하여 전송 및 수신에 비동기로 사용.
+                userToken.socket = e.AcceptSocket;
+                userToken.ProcessReceive();
             }
             else
             {
@@ -154,21 +112,6 @@ namespace VirusWarGameServer
 
             // 스레드 차단 해제
             autoResetEventAccept.Set();
-        }
-
-        void OnNewClient(Socket client, object token)
-        {
-            Console.WriteLine(string.Format("[{0}] A client connected. handle {1}", Thread.CurrentThread.ManagedThreadId, client.Handle));
-
-            SocketAsyncEventArgs receiveArgs = receiveEventArgsPool.Pop();
-            SocketAsyncEventArgs sendArgs    = sendEventArgsPool.Pop();
-
-            UserToken userToken = receiveArgs.UserToken as UserToken;
-            userToken.SetEventArgs(receiveArgs, sendArgs);
-
-            // 생성된 클라이언트 소켓을 보관하여 전송 및 수신에 비동기로 사용.
-            userToken.socket = client;
-            userToken.BeginReceive();
         }
     }
 }

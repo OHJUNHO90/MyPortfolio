@@ -29,14 +29,14 @@ namespace VirusWarGameServer
             this.sendEventArgs = sendEventArgs;
         }
 
-        public void BeginReceive()
+        public void ProcessReceive()
         {
             bool pending = socket.ReceiveAsync(receiveEventArgs);
 
             //동기로 완료될 경우 직접 이벤트 처리 함수 호출.
             if (!pending)
-            {   
-                ReceiveEventProcessing();
+            {
+                OnReceiveCompleted(null, receiveEventArgs);
             }
         }
 
@@ -45,20 +45,23 @@ namespace VirusWarGameServer
         public void OnReceiveCompleted(object sender, SocketAsyncEventArgs e)
         {
             Console.WriteLine("OnReceiveCompleted");
-            ReceiveEventProcessing();
-        }
 
-        void ReceiveEventProcessing()
-        {
             //이벤트 처리
-            if (receiveEventArgs.BytesTransferred > 0 && receiveEventArgs.SocketError == SocketError.Success)
+            if (e.BytesTransferred > 0 && e.SocketError == SocketError.Success)
             {
-                messageResolver.ReadByte(receiveEventArgs.Buffer, receiveEventArgs.Offset, receiveEventArgs.BytesTransferred,
-                                         ReceiveEventProcessing);
+                messageResolver.ReadBytes(e.Buffer, e.Offset, e.BytesTransferred, ReceiveEventProcessing);
+
+                //TO DO: 동기 처리 로직 중복 발생, 중복 로직 제거 필요.
+                bool pending = socket.ReceiveAsync(e);
+                if (!pending)
+                {
+                    OnReceiveCompleted(null, e);
+                }
             }
             else
             {
-                Console.WriteLine(string.Format("error {0},  transferred {1}", receiveEventArgs.SocketError, receiveEventArgs.BytesTransferred));
+                Console.WriteLine(string.Format("error {0},  transferred {1}", e.SocketError, e.BytesTransferred));
+                CloseSocket();
             }
         }
 
@@ -75,5 +78,16 @@ namespace VirusWarGameServer
             Console.WriteLine("OnSendCompleted");
         }
 
+
+        public void ClearQueue()
+        { 
+        
+        }
+
+        void CloseSocket()
+        {
+            SocketAsyncEventArgsPoolManager.Instance.PushReceiveEventArg(receiveEventArgs);
+            SocketAsyncEventArgsPoolManager.Instance.PushSendEventArg(sendEventArgs);
+        }
     }
 }
