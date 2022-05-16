@@ -13,6 +13,7 @@ namespace VirusWarGameServer
     /// </summary>
     class UserToken
     {
+        MessageHandler messageHandler = null;
         public Socket socket { get; set; }
         public SocketAsyncEventArgs receiveEventArgs { get; private set; }
         public SocketAsyncEventArgs sendEventArgs { get; private set; }
@@ -21,6 +22,7 @@ namespace VirusWarGameServer
         public UserToken()
         {
             messageResolver = new MessageResolver();
+            messageHandler  = new MessageHandler(this);
         }
 
         public void SetEventArgs(SocketAsyncEventArgs receiveEventArgs, SocketAsyncEventArgs sendEventArgs)
@@ -30,7 +32,7 @@ namespace VirusWarGameServer
         }
 
         public void ProcessReceive()
-        {
+        { 
             bool pending = socket.ReceiveAsync(receiveEventArgs);
 
             //동기로 완료될 경우 직접 이벤트 처리 함수 호출.
@@ -67,8 +69,8 @@ namespace VirusWarGameServer
 
         void ReceiveEventProcessing(Const<byte[]> array)
         {
-            //    
             Console.WriteLine("ReceiveEventProcessing");
+            messageHandler.OnMessage(array);
         }
 
         

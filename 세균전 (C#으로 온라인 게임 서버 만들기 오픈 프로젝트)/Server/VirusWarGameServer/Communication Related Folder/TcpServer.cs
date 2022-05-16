@@ -103,7 +103,9 @@ namespace VirusWarGameServer
 
                 // 생성된 클라이언트 소켓을 보관하여 전송 및 수신에 비동기로 사용.
                 userToken.socket = e.AcceptSocket;
-                userToken.ProcessReceive();
+
+                // 접속된 클라이언트에 1:1 매칭되는 Game User 객체 생성
+                GameServer.Instance.OnNewClient(userToken);
             }
             else
             {

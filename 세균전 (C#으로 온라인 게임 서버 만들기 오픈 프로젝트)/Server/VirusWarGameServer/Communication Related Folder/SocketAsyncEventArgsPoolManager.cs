@@ -9,6 +9,8 @@ namespace VirusWarGameServer
 {
     class SocketAsyncEventArgsPoolManager
     {
+        private SocketAsyncEventArgsPoolManager() { }
+
         private static SocketAsyncEventArgsPoolManager instance = null;
         public static SocketAsyncEventArgsPoolManager Instance
         {
@@ -24,6 +26,7 @@ namespace VirusWarGameServer
             }
         }
 
+
         // READ, WRITE 
         private const byte ALLOTMENT_COUNT = 2;
         private const short MAX_CONNECTIONS_COUNT = 10000;
@@ -32,11 +35,6 @@ namespace VirusWarGameServer
         SocketAsyncEventArgsPool receiveEventArgsPool;
         SocketAsyncEventArgsPool sendEventArgsPool;
         BufferManager bufferManager;
-
-        public SocketAsyncEventArgsPoolManager()
-        {
-
-        }
 
         public void Initialize()
         {
@@ -58,6 +56,7 @@ namespace VirusWarGameServer
             {
                 SocketAsyncEventArgs arg = new SocketAsyncEventArgs();
                 UserToken token = new UserToken();
+
                 arg.Completed += new EventHandler<SocketAsyncEventArgs>(token.OnReceiveCompleted);
                 arg.UserToken = token;
                 bufferManager.SetBuffer(arg);
@@ -72,6 +71,7 @@ namespace VirusWarGameServer
             {
                 SocketAsyncEventArgs arg = new SocketAsyncEventArgs();
                 UserToken token = new UserToken();
+
                 arg.Completed += new EventHandler<SocketAsyncEventArgs>(token.OnSendCompleted);
                 arg.UserToken = token;
                 bufferManager.SetBuffer(arg);
