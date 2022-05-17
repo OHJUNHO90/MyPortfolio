@@ -2,12 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace VirusWarGameServer
 {
     class GameServer
     {
+        object lockObj;
+        Thread eventTreatmentPart;
+        AutoResetEvent autoResetEventGameLoop;
+
+        Queue<MessageHandler> packetQueue;
+        List<MessageHandler> matchingWaitingUsers;
+        GameRoomManager roomManager;
+
+
+
         private GameServer() { }
 
         private static GameServer instance = null;
@@ -27,13 +38,85 @@ namespace VirusWarGameServer
 
         public void Initialize()
         {
+            lockObj = new object();
+            autoResetEventGameLoop = new AutoResetEvent(false);
+            packetQueue = new Queue<MessageHandler>();
+            matchingWaitingUsers = new List<MessageHandler>();
+            roomManager = new GameRoomManager();
 
+            eventTreatmentPart = new Thread(GameLoop);
+            eventTreatmentPart.Start();
         }
 
-        public void OnNewClient(UserToken token)
+        public void EnqueuePacket(MessageHandler messageHandler)
         {
-            token.ProcessReceive();
+            lock (lockObj)
+            {
+                packetQueue.Enqueue(messageHandler);
+                autoResetEventGameLoop.Set();
+            }
         }
+
+        void GameLoop()
+        {
+            while (true)
+            {
+                MessageHandler handler = null;
+
+                lock (lockObj)
+                {
+                    if (packetQueue.Count > 0)
+                    {
+                        handler = packetQueue.Dequeue();
+                    }
+                }
+
+                if (handler != null)
+                {
+                    ProcessUserOperation(handler);
+                }
+
+                if (packetQueue.Count <= 0)
+                {
+                    autoResetEventGameLoop.WaitOne();
+                }
+            }
+        }
+
+        void ProcessUserOperation(MessageHandler handler)
+        {
+            Message id = (Message)handler.packet.GetProtocolId();
+            Console.WriteLine("ProcessUserOperation, protocol id " + id);
+
+            switch (id)
+            {
+                /*방생성*/
+                case Message.ENTER_GAME_ROOM_REQ:
+                    {
+                        ENTER_GAME_ROOM_REQ(handler);
+                    }
+                    break;
+            }
+        }
+
+
+        /// <summary>
+        /// 현재 순차적으로 매칭 시킴.
+        /// TO DO: 순차적인 아닌 여러 조건에 따라 좀 더 똑똑하게 매칭시키는 로직이 필요해 보임.
+        /// </summary>
+        /// <param name="handler"></param>
+        void ENTER_GAME_ROOM_REQ(MessageHandler handler)
+        {
+            matchingWaitingUsers.Add(handler);
+
+            if (matchingWaitingUsers.Count == 2)
+            {
+                roomManager.CreateRoom(matchingWaitingUsers[0], matchingWaitingUsers[1]);
+                matchingWaitingUsers.Clear();
+            }
+        }
+
 
     }
+
 }

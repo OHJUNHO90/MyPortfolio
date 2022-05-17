@@ -105,7 +105,7 @@ namespace VirusWarGameServer
                 userToken.socket = e.AcceptSocket;
 
                 // 접속된 클라이언트에 1:1 매칭되는 Game User 객체 생성
-                GameServer.Instance.OnNewClient(userToken);
+                userToken.OnNewClient();
             }
             else
             {

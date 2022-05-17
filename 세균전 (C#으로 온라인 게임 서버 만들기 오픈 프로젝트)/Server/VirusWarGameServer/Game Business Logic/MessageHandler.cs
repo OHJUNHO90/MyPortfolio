@@ -9,6 +9,7 @@ namespace VirusWarGameServer
     class MessageHandler
     {
         public UserToken owner { private set; get; }
+        public Packet packet { set; get; }
         public MessageHandler(UserToken owner)
         {
             this.owner = owner;
@@ -16,8 +17,11 @@ namespace VirusWarGameServer
 
         public void OnMessage(Const <byte[]> buffer) 
         {
-            
-        }
+            byte[] clone = new byte[1024];
+            Array.Copy(buffer.Value, clone, buffer.Value.Length);
+            packet = new Packet(clone);
 
+            GameServer.Instance.EnqueuePacket(this);
+        }
     }
 }
