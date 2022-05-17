@@ -79,36 +79,59 @@ namespace VirusWarGameServer
         }
 
 
-        public void Send(Packet packet)
+        public void SendMessage(Packet packet)
         {
             lock (sendlockObj)
             {
                 sendingQueue.Enqueue(packet);
+                SendMessage();
+            }
+        }
 
-                // 전송이 아직 완료된 상태가 아니므로 데이터만 가져오고 큐에서 제거하진 않는다.
-                Packet msg = this.sendingQueue.Peek();
+        /// <summary>
+        /// 락 스코프 영역내에서 호출되는 함수
+        /// </summary>
+        void SendMessage()
+        {
+            // 전송이 아직 완료된 상태가 아니므로 데이터만 가져오고 큐에서 제거하진 않는다.
+            Packet msg = this.sendingQueue.Peek();
 
-                // 패킷 사이즈 만큼 버퍼 크기를 설정
-                this.sendEventArgs.SetBuffer(sendEventArgs.Offset, msg.position);
+            // 패킷 사이즈 만큼 버퍼 크기를 설정
+            this.sendEventArgs.SetBuffer(sendEventArgs.Offset, msg.position);
 
-                // 패킷 내용을 SocketAsyncEventArgs 버퍼에 복사
-                Array.Copy(msg.buffer, 0, sendEventArgs.Buffer, this.sendEventArgs.Offset, msg.position);
+            // 패킷 내용을 SocketAsyncEventArgs 버퍼에 복사
+            Array.Copy(msg.buffer, 0, sendEventArgs.Buffer, this.sendEventArgs.Offset, msg.position);
 
-                // 비동기 전송 시작.
-                bool pending = this.socket.SendAsync(sendEventArgs);
-                if (!pending)
-                {
-                    OnSendCompleted(null, sendEventArgs);
-                }
+            // 비동기 전송 시작.
+            bool pending = this.socket.SendAsync(sendEventArgs);
+            if (!pending)
+            {
+                OnSendCompleted(null, sendEventArgs);
             }
         }
 
 
+        /// <summary>
+        /// 락 스코프 영역내에서 호출될수도 아닐수도 있는 함수
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         /*전송 완료 이벤트*/
         public void OnSendCompleted(object sender, SocketAsyncEventArgs e)
         {
             Console.WriteLine(string.Format("OnSendCompleted : {0}, transferred {1}", e.SocketError, e.BytesTransferred));
 
+            //전송 완료된 패킷을 큐에서 제거
+            //중첩 락...
+            lock (sendlockObj)
+            {
+                this.sendingQueue.Dequeue();
+
+                if (sendingQueue.Count > 0)
+                {
+                    SendMessage();
+                }
+            }
         }
 
 

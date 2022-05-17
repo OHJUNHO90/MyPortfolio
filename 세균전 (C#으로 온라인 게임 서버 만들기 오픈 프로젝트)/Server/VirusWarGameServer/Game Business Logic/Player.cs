@@ -38,14 +38,20 @@ namespace VirusWarGameServer
             this.myIndex = myIndex;
         }
 
-        public void SetEnteredRoomState()
+        public void ChangeStateToEnteredRoom()
         {
             playerState = PLAYER_STATE.ENTERED_ROOM;
         }
 
+        public void EnterRoom()
+        { 
+            
+        }
+
+
         public void SendMessage(Packet packet)
         {
-            handler.owner.Send(packet);
+            handler.owner.SendMessage(packet);
         }
 
     }

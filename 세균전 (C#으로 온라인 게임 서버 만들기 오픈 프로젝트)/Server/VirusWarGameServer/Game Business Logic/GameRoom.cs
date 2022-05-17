@@ -24,13 +24,12 @@ namespace VirusWarGameServer
 			this.players.ForEach(player =>
 			{
 				//플레이어들의 초기 상태를 지정해 준다.
-				player.SetEnteredRoomState();
+				player.ChangeStateToEnteredRoom();
 				Packet packet = new Packet((short)Message.START_LOADING);
 				packet.AddBody(player.myIndex);
 
 				/*전송 테스트*/
 				player.SendMessage(packet);
-				//player.enter_room(player1, this);
 			});
 		}
 	}
