@@ -20,7 +20,7 @@ namespace VirusWarGameServer
         public Packet(short protocol_id)
         {
             buffer = new byte[1024];
-            RecordheaderSize();
+            RecordHeaderSize();
 
             this.protocol_id = protocol_id;
             byte[] temp_buffer = BitConverter.GetBytes(protocol_id);
@@ -33,12 +33,19 @@ namespace VirusWarGameServer
             this.buffer = buffer;
         }
 
+        public void AddBody(byte body)
+        {
+            byte[] temp_buffer = BitConverter.GetBytes(body);
+            temp_buffer.CopyTo(this.buffer, this.position);
+            this.position += sizeof(byte);
+        }
+
         public short GetProtocolId()
         {
             return BitConverter.ToInt16(buffer, HEADERSIZE);
         }
 
-        void RecordheaderSize()
+        void RecordHeaderSize()
         {
             byte[] header = BitConverter.GetBytes(HEADERSIZE);
             header.CopyTo(buffer, 0);
