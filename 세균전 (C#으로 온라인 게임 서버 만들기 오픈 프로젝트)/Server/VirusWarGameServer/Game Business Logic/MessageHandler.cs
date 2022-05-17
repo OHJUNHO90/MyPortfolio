@@ -8,6 +8,8 @@ namespace VirusWarGameServer
 {
     class MessageHandler
     {
+        public string serialNumber { get; set; }
+
         public UserToken owner { private set; get; }
         public Packet packet { set; get; }
         public MessageHandler(UserToken owner)

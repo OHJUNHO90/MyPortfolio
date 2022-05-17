@@ -29,6 +29,8 @@ namespace VirusWarGameServer
         public byte myIndex { get; private set; }
         public PLAYER_STATE playerState { get; set; }
 
+        public List<short> viruses { get; private set; }
+
         /// <summary>
         /// // 플레이어들을 생성하고 각각 0번, 1번 인덱스를 부여해 준다.
         /// </summary>
@@ -36,6 +38,20 @@ namespace VirusWarGameServer
         {
             this.handler = handler;
             this.myIndex = myIndex;
+            viruses = new List<short>();
+        }
+
+        public string SerialNumber
+        {
+            private set { }
+            get {
+                return handler.serialNumber;
+            }
+        }
+
+        public void add_cell(short position)
+        {
+            viruses.Add(position);
         }
 
         public void ChangeStateToEnteredRoom()
@@ -43,11 +59,10 @@ namespace VirusWarGameServer
             playerState = PLAYER_STATE.ENTERED_ROOM;
         }
 
-        public void EnterRoom()
-        { 
-            
+        public void ChangeStateToLoadingCompleted()
+        {
+            playerState = PLAYER_STATE.LOADING_COMPLETE;
         }
-
 
         public void SendMessage(Packet packet)
         {

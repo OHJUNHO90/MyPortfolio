@@ -56,7 +56,6 @@ namespace VirusWarGameServer
             {
                 SocketAsyncEventArgs arg = new SocketAsyncEventArgs();
                 UserToken token = new UserToken();
-
                 arg.Completed += new EventHandler<SocketAsyncEventArgs>(token.OnReceiveCompleted);
                 arg.UserToken = token;
                 bufferManager.SetBuffer(arg);
@@ -71,7 +70,6 @@ namespace VirusWarGameServer
             {
                 SocketAsyncEventArgs arg = new SocketAsyncEventArgs();
                 UserToken token = new UserToken();
-
                 arg.Completed += new EventHandler<SocketAsyncEventArgs>(token.OnSendCompleted);
                 arg.UserToken = token;
                 bufferManager.SetBuffer(arg);

@@ -12,12 +12,9 @@ namespace VirusWarGameServer
         object lockObj;
         Thread eventTreatmentPart;
         AutoResetEvent autoResetEventGameLoop;
-
         Queue<MessageHandler> packetQueue;
         List<MessageHandler> matchingWaitingUsers;
         GameRoomManager roomManager;
-
-
 
         private GameServer() { }
 
@@ -96,6 +93,11 @@ namespace VirusWarGameServer
                         ENTER_GAME_ROOM_REQ(handler);
                     }
                     break;
+                case Message.LOADING_COMPLETED:
+                    {
+                        LOADING_COMPLETED(handler);
+                    }
+                    break;
             }
         }
 
@@ -109,14 +111,19 @@ namespace VirusWarGameServer
         {
             matchingWaitingUsers.Add(handler);
 
-            if (matchingWaitingUsers.Count == 2)
+            if (2 <= matchingWaitingUsers.Count)
             {
                 roomManager.CreateRoom(matchingWaitingUsers[0], matchingWaitingUsers[1]);
                 matchingWaitingUsers.Clear();
             }
         }
 
+        void LOADING_COMPLETED(MessageHandler handler)
+        {
+            roomManager.OnLoadingCompleted(handler);
+        }
+
+
 
     }
-
 }
