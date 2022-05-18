@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VirusWarGameServer
 {
-    class Packet
+    public class Packet
     {
         static readonly short HEADERSIZE = 2;
 

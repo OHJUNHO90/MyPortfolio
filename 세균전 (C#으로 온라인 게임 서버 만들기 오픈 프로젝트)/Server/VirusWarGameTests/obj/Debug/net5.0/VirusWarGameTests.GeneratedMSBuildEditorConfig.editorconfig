@@ -1,0 +1,10 @@
+is_global = true
+build_property.TargetFramework = net5.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.PublishSingleFile = 
+build_property.IncludeAllContentForSelfExtract = 
+build_property._SupportedPlatformList = Android,iOS,Linux,macOS,Windows
+build_property.RootNamespace = VirusWarGameTests
+build_property.ProjectDir = D:\Portfolio\MyPortfolio\세균전 (C#으로 온라인 게임 서버 만들기 오픈 프로젝트)\Server\VirusWarGameTests\
