@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VirusWarGameServer
 {
-    class GameRoom
+    public class GameRoom
     {
 		// 게임 보드판.
 		List<short> gameBoard;
@@ -52,7 +52,7 @@ namespace VirusWarGameServer
 			});
 		}
 
-		public bool AreYouReady()
+		public bool BeReady()
 		{
 			return players.All(target => target.playerState.Equals(PLAYER_STATE.LOADING_COMPLETE));
 		}
@@ -74,11 +74,12 @@ namespace VirusWarGameServer
 				player.viruses.ForEach(position => packet.AddBody(position));
 			});
 
+			/*기본값 0*/
 			packet.AddBody(currentTurnPlayer);
 			this.players.ForEach(player => player.SendMessage(packet));
 		}
 
-		void SetInitialData()
+		public void SetInitialData()
 		{
 			// 보드판 데이터 초기화.
 			for (int i = 0; i < gameBoard.Count; ++i)
@@ -97,6 +98,51 @@ namespace VirusWarGameServer
 			currentTurnPlayer = 0;   
 		}
 
+		public void OnMoveVirus(MessageHandler handler)
+		{
+			/* 게임 비지니스 이동 판단 로직..
+			 * 서버에서 구현하는게 맞나? 의심스로움.
+			 * 클라이언트에서 최초 이동 가능 여부 판단을 하는게 맞지 않나?
+			 * 하지만 그러기 위해선 같은 방에 존재하는 모든 유저들의 위치 정보를 개별적으로
+			 * 모든 클라이언트가 가지고 있어야 함
+			 */
+
+			byte[] body = handler.packet.GetBodyBlock();
+			// 바디길이는 총 4바이트로, 처음 2바이트는 시작 위치, 그다음 2바이트는 이동 위치로 정의되어 있다.
+			short current_position = BitConverter.ToInt16(body, 0);
+			short target_position = BitConverter.ToInt16(body, sizeof(short));
+
+			Player player = GetPlayer(handler.serialNumber); 
+
+			/*동일 좌표로 이동은 불가*/
+
+
+			/*목적지에 다른 세균이 위치되어있으면 이동 불가*/
+
+			/*게임 보드판을 기준으로 1칸 이동인지 2칸이동인지 위치를 찾아*/
+
+			/*1칸 이동이면 세균 복제
+			  현재는 이동 테스트만을 목적, 게임 로직은 추후 개발*/
+			put_virus(player.myIndex, target_position);
+
+			/*2칸 이동이면 그냥 이동만*/
+			//remove_virus(player.myIndex, current_position);
+			//put_virus(player.myIndex, target_position);
+
+			Packet packet = new Packet((short)Message.PLAYER_MOVED);
+			this.players.ForEach(player =>
+			{
+				packet.AddBody(player.myIndex);
+				packet.AddBody(current_position);
+				packet.AddBody(target_position);
+				player.SendMessage(packet);
+			});
+		}
+
+		short GetPosition(byte row, byte col)
+		{
+			return (short)(row * COLUMN_COUNT + col);
+		}
 		void put_virus(byte player_index, byte row, byte col)
 		{
 			short position = GetPosition(row, col);
@@ -105,16 +151,21 @@ namespace VirusWarGameServer
 		void put_virus(byte player_index, short position)
 		{
 			gameBoard[position] = player_index;
-			GetPlayer(player_index).add_cell(position);
+			GetPlayer(player_index).AddCell(position);
+		}
+		void remove_virus(byte player_index, short position)
+		{
+			gameBoard[position] = EMPTY_SLOT;
+			GetPlayer(player_index).RemoveCell(position);
 		}
 		Player GetPlayer(byte targetIndex)
 		{
-			return this.players.Find(obj => obj.myIndex == targetIndex);
-		}
-		short GetPosition(byte row, byte col)
-		{
-			return (short)(row * COLUMN_COUNT + col);
+			return players.Find(obj => obj.myIndex == targetIndex);
 		}
 
+		Player GetPlayer(string serialNumber)
+		{
+			return players.Find(obj => obj.SerialNumber.Equals(serialNumber));
+		}
 	}
 }

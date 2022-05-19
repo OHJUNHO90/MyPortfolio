@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VirusWarGameServer
 {
-    enum PLAYER_STATE : byte
+    public enum PLAYER_STATE : byte
     {
         NONE,
 
@@ -23,7 +23,7 @@ namespace VirusWarGameServer
         CLIENT_TURN_FINISHED
     }
 
-    class Player
+    public class Player
     {
         MessageHandler handler = null;
         public byte myIndex { get; private set; }
@@ -49,9 +49,14 @@ namespace VirusWarGameServer
             }
         }
 
-        public void add_cell(short position)
+        public void AddCell(short position)
         {
             viruses.Add(position);
+        }
+
+        public void RemoveCell(short position)
+        {
+            this.viruses.Remove(position);
         }
 
         public void ChangeStateToEnteredRoom()

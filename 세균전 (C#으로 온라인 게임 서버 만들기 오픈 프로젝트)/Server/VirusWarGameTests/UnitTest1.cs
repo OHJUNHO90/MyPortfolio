@@ -11,7 +11,7 @@ namespace VirusWarGameTests
         [TestMethod]
         public void TestMethod1()
         {
-
+            
         }
     }
 }

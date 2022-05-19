@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VirusWarGameServer
 {
-    class MessageHandler
+    public class MessageHandler
     {
         public string serialNumber { get; set; }
 

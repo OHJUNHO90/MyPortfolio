@@ -97,3 +97,10 @@ D:\Portfolio\MyPortfolio\세균전 (C#으로 온라인 게임 서버 만들기 �
 D:\Portfolio\MyPortfolio\세균전 (C#으로 온라인 게임 서버 만들기 오픈 프로젝트)\Server\VirusWarGameTests\obj\Debug\net5.0\ref\VirusWarGameTests.dll
 D:\Portfolio\MyPortfolio\세균전 (C#으로 온라인 게임 서버 만들기 오픈 프로젝트)\Server\VirusWarGameTests\obj\Debug\net5.0\VirusWarGameTests.pdb
 D:\Portfolio\MyPortfolio\세균전 (C#으로 온라인 게임 서버 만들기 오픈 프로젝트)\Server\VirusWarGameTests\obj\Debug\net5.0\VirusWarGameTests.genruntimeconfig.cache
+D:\Portfolio\MyPortfolio\세균전 (C#으로 온라인 게임 서버 만들기 오픈 프로젝트)\Server\VirusWarGameTests\bin\Debug\net5.0\CoverletSourceRootsMapping
+D:\Portfolio\MyPortfolio\세균전 (C#으로 온라인 게임 서버 만들기 오픈 프로젝트)\Server\VirusWarGameTests\bin\Debug\net5.0\VirusWarGameServer.deps.json
+D:\Portfolio\MyPortfolio\세균전 (C#으로 온라인 게임 서버 만들기 오픈 프로젝트)\Server\VirusWarGameTests\bin\Debug\net5.0\VirusWarGameServer.runtimeconfig.json
+D:\Portfolio\MyPortfolio\세균전 (C#으로 온라인 게임 서버 만들기 오픈 프로젝트)\Server\VirusWarGameTests\bin\Debug\net5.0\VirusWarGameServer.runtimeconfig.dev.json
+D:\Portfolio\MyPortfolio\세균전 (C#으로 온라인 게임 서버 만들기 오픈 프로젝트)\Server\VirusWarGameTests\bin\Debug\net5.0\VirusWarGameServer.exe
+D:\Portfolio\MyPortfolio\세균전 (C#으로 온라인 게임 서버 만들기 오픈 프로젝트)\Server\VirusWarGameTests\bin\Debug\net5.0\VirusWarGameServer.dll
+D:\Portfolio\MyPortfolio\세균전 (C#으로 온라인 게임 서버 만들기 오픈 프로젝트)\Server\VirusWarGameTests\bin\Debug\net5.0\VirusWarGameServer.pdb

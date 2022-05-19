@@ -8,8 +8,8 @@ namespace VirusWarGameServer
 {
     public class Packet
     {
-        static readonly short HEADERSIZE = 2;
-
+        static readonly short HEADERSIZE  = 2;
+        static readonly short PROTOCOL_ID = 2;
         public byte[] buffer { get; set; }
         public int position { get; private set; }
         public short protocol_id { get; private set; }
@@ -22,7 +22,7 @@ namespace VirusWarGameServer
             this.protocol_id = protocol_id;
             byte[] temp_buffer = BitConverter.GetBytes(protocol_id);
             temp_buffer.CopyTo(this.buffer, HEADERSIZE);
-            position = HEADERSIZE + temp_buffer.Length;
+            position = HEADERSIZE + PROTOCOL_ID;
         }
 
         public Packet(byte[] buffer)
@@ -47,6 +47,11 @@ namespace VirusWarGameServer
             temp_buffer.CopyTo(this.buffer, this.position);
             this.position += sizeof(short);
         }
+        public byte[] GetBodyBlock()
+        {
+            return buffer[(HEADERSIZE + PROTOCOL_ID)..buffer.Length];
+        }
+
 
         public short GetProtocolId()
         {

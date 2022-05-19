@@ -98,6 +98,16 @@ namespace VirusWarGameServer
                         LOADING_COMPLETED(handler);
                     }
                     break;
+                case Message.MOVING_REQ:
+                    {
+                        MOVING_REQ(handler);
+                    }
+                    break;
+                case Message.TURN_FINISHED_REQ:
+                    { 
+                        
+                    }
+                    break;
             }
         }
 
@@ -124,6 +134,9 @@ namespace VirusWarGameServer
         }
 
 
-
+        void MOVING_REQ(MessageHandler handler)
+        {
+            roomManager.OnMovingRequest(handler);   
+        }
     }
 }
