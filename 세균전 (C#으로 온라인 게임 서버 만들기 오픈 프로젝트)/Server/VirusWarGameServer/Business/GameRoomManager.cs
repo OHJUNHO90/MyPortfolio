@@ -52,7 +52,7 @@ namespace VirusWarGameServer
             GameRoom room = FindRoom(handler.serialNumber);
             FindPlayer(handler.serialNumber)?.ChangeStateToLoadingCompleted();
 
-            if (!room.BeReady())
+            if (!room.IsReady())
             {
                 // 모든 유저가 준비 완료가 되지 않음, 대기
                 return;

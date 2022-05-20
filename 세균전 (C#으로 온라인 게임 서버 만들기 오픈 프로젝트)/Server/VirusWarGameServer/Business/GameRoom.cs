@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace VirusWarGameServer
 {
+	/// <summary>
+	/// TO DO: 리팩토링 대상, 너무 많은 책임과 의무를 가짐.
+	/// </summary>
     public class GameRoom
     {
 		// 게임 보드판.
@@ -16,14 +19,19 @@ namespace VirusWarGameServer
 		byte currentTurnPlayer;
 
 		byte COLUMN_COUNT = 7;
-		readonly short EMPTY_SLOT = short.MaxValue;
+		readonly short EMPTY_SLOT = -1;
 
 		public List<Player> players { set; get; }
 		public int RoomNumber { set; get; }
 
+		RuleReferee ruleReferee;
+
 		public GameRoom()
 		{
+			// 먼저 대기열에 합류된 유저부터 시작
+			currentTurnPlayer = 0;
 			players = new List<Player>();
+
 			gameBoard = new List<short>();
 			tableBoard = new List<short>();
 
@@ -32,6 +40,15 @@ namespace VirusWarGameServer
 				gameBoard.Add(EMPTY_SLOT);
 				tableBoard.Add(i);
 			}
+		}
+
+		Player GetPlayer(byte targetIndex)
+		{
+			return players.Find(obj => obj.myIndex == targetIndex);
+		}
+		Player GetPlayer(string serialNumber)
+		{
+			return players.Find(obj => obj.SerialNumber.Equals(serialNumber));
 		}
 
 		public void EnterGameRoom(Player player1, Player player2)
@@ -52,7 +69,7 @@ namespace VirusWarGameServer
 			});
 		}
 
-		public bool BeReady()
+		public bool IsReady()
 		{
 			return players.All(target => target.playerState.Equals(PLAYER_STATE.LOADING_COMPLETE));
 		}
@@ -62,6 +79,9 @@ namespace VirusWarGameServer
 		/// </summary>
 		public void GameStart()
 		{
+			/*게임 진행을 위한 심판 객체*/
+			ruleReferee = new RuleReferee();
+
 			SetInitialData();
 
 			Packet packet = new Packet((short)Message.GAME_START);
@@ -79,14 +99,11 @@ namespace VirusWarGameServer
 			this.players.ForEach(player => player.SendMessage(packet));
 		}
 
+		/// <summary>
+		/// 재분류해야할 함수, Game Room의 책임에서 벗어남.
+		/// </summary>
 		public void SetInitialData()
 		{
-			// 보드판 데이터 초기화.
-			for (int i = 0; i < gameBoard.Count; ++i)
-			{
-				gameBoard[i] = EMPTY_SLOT;
-			}
-
 			// 1번 플레이어의 세균은 왼쪽위(0,0), 오른쪽위(0,6) 두군데에 배치.
 			put_virus(0, 0, 0);
 			put_virus(0, 0, 6);
@@ -94,10 +111,11 @@ namespace VirusWarGameServer
 			put_virus(1, 6, 0);
 			put_virus(1, 6, 6);
 
-			// 1P부터 시작.
-			currentTurnPlayer = 0;   
 		}
 
+		/// <summary>
+		/// 재분류해야할 함수, Game Room의 책임에서 벗어남.
+		/// </summary>
 		public void OnMoveVirus(MessageHandler handler)
 		{
 			/* 게임 비지니스 이동 판단 로직..
@@ -139,33 +157,36 @@ namespace VirusWarGameServer
 			});
 		}
 
+		/// <summary>
+		/// 재분류해야할 함수, Game Room의 책임에서 벗어남.
+		/// </summary>
 		short GetPosition(byte row, byte col)
 		{
 			return (short)(row * COLUMN_COUNT + col);
 		}
+		/// <summary>
+		/// 재분류해야할 함수, Game Room의 책임에서 벗어남.
+		/// </summary>
 		void put_virus(byte player_index, byte row, byte col)
 		{
 			short position = GetPosition(row, col);
 			put_virus(player_index, position);
 		}
+		/// <summary>
+		/// 재분류해야할 함수, Game Room의 책임에서 벗어남.
+		/// </summary>
 		void put_virus(byte player_index, short position)
 		{
 			gameBoard[position] = player_index;
 			GetPlayer(player_index)?.AddCell(position);
 		}
+		/// <summary>
+		/// 재분류해야할 함수, Game Room의 책임에서 벗어남.
+		/// </summary>
 		void remove_virus(byte player_index, short position)
 		{
 			gameBoard[position] = EMPTY_SLOT;
 			GetPlayer(player_index)?.RemoveCell(position);
-		}
-		Player GetPlayer(byte targetIndex)
-		{
-			return players.Find(obj => obj.myIndex == targetIndex);
-		}
-
-		Player GetPlayer(string serialNumber)
-		{
-			return players.Find(obj => obj.SerialNumber.Equals(serialNumber));
 		}
 	}
 }

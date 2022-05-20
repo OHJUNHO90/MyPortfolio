@@ -133,7 +133,6 @@ namespace VirusWarGameServer
             roomManager.OnLoadingCompleted(handler);
         }
 
-
         void MOVING_REQ(MessageHandler handler)
         {
             roomManager.OnMovingRequest(handler);   

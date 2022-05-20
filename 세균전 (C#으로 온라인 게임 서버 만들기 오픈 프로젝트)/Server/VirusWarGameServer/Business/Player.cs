@@ -28,8 +28,10 @@ namespace VirusWarGameServer
         MessageHandler handler = null;
         public byte myIndex { get; private set; }
         public PLAYER_STATE playerState { get; set; }
-
         public List<short> viruses { get; private set; }
+
+        private PlayerAction myAction;
+
 
         /// <summary>
         /// // 플레이어들을 생성하고 각각 0번, 1번 인덱스를 부여해 준다.
