@@ -151,12 +151,12 @@ namespace VirusWarGameServer
 		void put_virus(byte player_index, short position)
 		{
 			gameBoard[position] = player_index;
-			GetPlayer(player_index).AddCell(position);
+			GetPlayer(player_index)?.AddCell(position);
 		}
 		void remove_virus(byte player_index, short position)
 		{
 			gameBoard[position] = EMPTY_SLOT;
-			GetPlayer(player_index).RemoveCell(position);
+			GetPlayer(player_index)?.RemoveCell(position);
 		}
 		Player GetPlayer(byte targetIndex)
 		{
