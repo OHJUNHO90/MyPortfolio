@@ -26,35 +26,35 @@ namespace VirusWarGameServer
             }
 		}
 
-		public void put_virus(byte index, Player target)
-		{
-			gameBoard[index].PlayerIndex = target.myIndex;
-			gameBoard[index].State = NOT_EMPTY;
-			target.AddCell(index);
-		}
+        public void AddVirus(short position, Player target)
+        {
+            gameBoard[position].PlayerIndex = target.myIndex;
+            gameBoard[position].State = NOT_EMPTY;
+            target.AddCell(position);
+        }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		public void put_virus(byte row, byte col, Player target)
-		{
-			short position = GetPosition(row, col);
-			gameBoard[position].PlayerIndex = target.myIndex;
-			gameBoard[position].State = NOT_EMPTY;
-			target.AddCell(position);
-		}
+        /// <summary>
+        /// 
+        /// </summary>
+        public void AddVirus(byte row, byte col, Player target)
+        {
+            short position = GetPosition(row, col);
+            gameBoard[position].PlayerIndex = target.myIndex;
+            gameBoard[position].State = NOT_EMPTY;
+            target.AddCell(position);
+        }
 
-		/// <summary>
-		/// 
-		/// </summary>
-		short GetPosition(byte row, byte col)
+        /// <summary>
+        /// 
+        /// </summary>
+        short GetPosition(byte row, byte col)
 		{
 			return (short)(row * COLUMN_COUNT + col);
 		}
 		/// <summary>
 		/// 
 		/// </summary>
-		public void remove_virus(short position, Player target)
+		public void RemoveVirus(short position, Player target)
 		{
 			gameBoard[position].PlayerIndex = NO_ONE;
 			gameBoard[position].State = EMPTY_SLOT;

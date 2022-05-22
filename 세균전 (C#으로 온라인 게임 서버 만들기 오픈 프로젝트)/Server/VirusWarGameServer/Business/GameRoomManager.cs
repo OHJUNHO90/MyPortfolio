@@ -67,7 +67,7 @@ namespace VirusWarGameServer
         /// </summary>
         public void OnMovingRequest(MessageHandler handler)
         {
-            FindRoom(handler.serialNumber).OnMoveVirus(handler);
+            FindRoom(handler.serialNumber).OnMovingRequest(handler);
         }
 
         public void OnTurnFinishedReq(MessageHandler handler)

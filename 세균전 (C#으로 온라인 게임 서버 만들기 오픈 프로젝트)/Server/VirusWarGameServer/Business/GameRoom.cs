@@ -44,11 +44,11 @@ namespace VirusWarGameServer
 			players.Add(player2);
 
 			// 1번 플레이어의 세균은 왼쪽위(0,0), 오른쪽위(0,6) 두군데에 배치.
-			gameBoard.put_virus(0, 0, player1);
-			gameBoard.put_virus(0, 6, player1);
+			gameBoard.AddVirus(0, 0, player1);
+			gameBoard.AddVirus(0, 6, player1);
 			// 2번 플레이어는 세균은 왼쪽아래(6,0), 오른쪽아래(6,6) 두군데에 배치.
-			gameBoard.put_virus(6, 0, player2);
-			gameBoard.put_virus(6, 6, player2);
+			gameBoard.AddVirus(6, 0, player2);
+			gameBoard.AddVirus(6, 6, player2);
 
 			// 로딩 시작 메시지 전송.
 			this.players.ForEach(player =>
@@ -91,7 +91,7 @@ namespace VirusWarGameServer
 		/// <summary>
 		/// 
 		/// </summary>
-		public void OnMoveVirus(MessageHandler handler)
+		public void OnMovingRequest(MessageHandler handler)
 		{
 			byte[] body = handler.packet.GetBodyBlock();
 			// 바디길이는 총 4바이트로, 처음 2바이트는 시작 위치, 그다음 2바이트는 이동 위치로 정의되어 있다.
@@ -99,8 +99,23 @@ namespace VirusWarGameServer
 			short target_position  = BitConverter.ToInt16(body, sizeof(short));
 
 			Player player = GetPlayer(handler.serialNumber);
-			gameBoard.remove_virus(current_position, player);
-			gameBoard.put_virus(player.myIndex, player);
+			gameBoard.RemoveVirus(current_position, player);
+
+			/*데코레이터로 조건 검사 수행*/
+
+			///////////////////////////////////////////////
+			/*동일 좌표 이동 불가*/
+			ExecuteDecorator decorator = new ExecuteDecorator();
+			decorator.Execute(new TheSamePlace(), current_position, target_position, this.gameBoard);
+
+			/*2칸이상 이동 불가*/
+
+
+			/*목적지에 다른 객체가 존재하면 이동 불가*/
+			///////////////////////////////////////////////
+
+
+			gameBoard.AddVirus(target_position, player);
 
 			Packet packet = new Packet((short)Message.PLAYER_MOVED);
 
