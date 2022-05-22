@@ -104,8 +104,8 @@ namespace VirusWarGameServer
                     }
                     break;
                 case Message.TURN_FINISHED_REQ:
-                    { 
-                        
+                    {   
+
                     }
                     break;
             }
@@ -136,6 +136,11 @@ namespace VirusWarGameServer
         void MOVING_REQ(MessageHandler handler)
         {
             roomManager.OnMovingRequest(handler);   
+        }
+
+        void TURN_FINISHED_REQ(MessageHandler handler)
+        {
+            roomManager.OnTurnFinishedReq(handler);
         }
     }
 }

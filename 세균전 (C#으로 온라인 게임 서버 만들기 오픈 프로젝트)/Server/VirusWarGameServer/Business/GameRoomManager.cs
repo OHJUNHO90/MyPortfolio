@@ -70,5 +70,10 @@ namespace VirusWarGameServer
             FindRoom(handler.serialNumber).OnMoveVirus(handler);
         }
 
+        public void OnTurnFinishedReq(MessageHandler handler)
+        {
+            
+        }
+
     }
 }
