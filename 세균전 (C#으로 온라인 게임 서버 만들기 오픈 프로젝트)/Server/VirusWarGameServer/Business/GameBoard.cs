@@ -6,30 +6,32 @@ using System.Threading.Tasks;
 
 namespace VirusWarGameServer
 {
-    class GameBoard
+    public class GameBoard
     {
-		List<Cell> gameBoard = new List<Cell>();
+		public List<Cell> CellList { private set; get; }
         //List<short> gameBoard = new List<short>();
 		//List<short> tableBoard = new List<short>();
 
-		byte COLUMN_COUNT = 7;
-		readonly byte NO_ONE = 0;
+		public readonly byte COLUMN_COUNT = 7;
+        readonly byte NO_ONE = 0;
 		readonly short EMPTY_SLOT = 0;
 		readonly short NOT_EMPTY = 1;
 		
 
         public GameBoard()
         {
-			for (byte i = 0; i < COLUMN_COUNT * COLUMN_COUNT; ++i)
+            CellList = new List<Cell>();
+
+            for (byte i = 0; i < Math.Pow(COLUMN_COUNT, 2); ++i) 
             {
-                gameBoard.Add(new Cell());
+                CellList.Add(new Cell());
             }
 		}
 
         public void AddVirus(short position, Player target)
         {
-            gameBoard[position].PlayerIndex = target.myIndex;
-            gameBoard[position].State = NOT_EMPTY;
+            CellList[position].PlayerIndex = target.myIndex;
+            CellList[position].State = NOT_EMPTY;
             target.AddCell(position);
         }
 
@@ -39,8 +41,8 @@ namespace VirusWarGameServer
         public void AddVirus(byte row, byte col, Player target)
         {
             short position = GetPosition(row, col);
-            gameBoard[position].PlayerIndex = target.myIndex;
-            gameBoard[position].State = NOT_EMPTY;
+            CellList[position].PlayerIndex = target.myIndex;
+            CellList[position].State = NOT_EMPTY;
             target.AddCell(position);
         }
 
@@ -51,14 +53,24 @@ namespace VirusWarGameServer
 		{
 			return (short)(row * COLUMN_COUNT + col);
 		}
-		/// <summary>
-		/// 
-		/// </summary>
-		public void RemoveVirus(short position, Player target)
-		{
-			gameBoard[position].PlayerIndex = NO_ONE;
-			gameBoard[position].State = EMPTY_SLOT;
-			target.RemoveCell(position);
-		}
+        /// <summary>
+        /// 
+        /// </summary>
+        public void RemoveVirus(short position, Player target)
+        {
+            CellList[position].PlayerIndex = NO_ONE;
+            CellList[position].State = EMPTY_SLOT;
+            target.RemoveCell(position);
+        }
+
+        public bool IsItEmpty(int index)
+        {
+            if (index < CellList.Count)
+            {
+                return CellList[index].State.Equals(EMPTY_SLOT);
+            }
+           
+            return false; 
+        }
 	}
 }

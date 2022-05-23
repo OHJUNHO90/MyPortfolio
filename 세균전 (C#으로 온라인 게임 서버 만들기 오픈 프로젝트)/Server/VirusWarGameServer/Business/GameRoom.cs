@@ -98,34 +98,36 @@ namespace VirusWarGameServer
 			short current_position = BitConverter.ToInt16(body, 0);
 			short target_position  = BitConverter.ToInt16(body, sizeof(short));
 
-			Player player = GetPlayer(handler.serialNumber);
-			gameBoard.RemoveVirus(current_position, player);
-
 			/*데코레이터로 조건 검사 수행*/
+			/*1. 동일 좌표 이동 불가*/
+			/*2. 2칸이상 이동 불가*/
+			/*3. 이미 바이러스가 존재하는 셀로는 이동이 불가.*/
 
-			///////////////////////////////////////////////
-			/*동일 좌표 이동 불가*/
+			/*TO DO: 단위테스트 진행*/
 			ExecuteDecorator decorator = new ExecuteDecorator();
-			decorator.Execute(new TheSamePlace(), current_position, target_position, this.gameBoard);
+			bool executionResult = decorator.Execute( new TheSamePlace( new PreventMovementMoreThanTwoCell( new DuplicateLocation() ) ),
+													  current_position,
+													  target_position, 
+													  this.gameBoard );
 
-			/*2칸이상 이동 불가*/
-
-
-			/*목적지에 다른 객체가 존재하면 이동 불가*/
-			///////////////////////////////////////////////
-
-
-			gameBoard.AddVirus(target_position, player);
-
-			Packet packet = new Packet((short)Message.PLAYER_MOVED);
-
-			this.players.ForEach(player =>
+			/* TO DO: 모든 조건을 통과시, 함수포인터로 실행되는 방식으로 수정*/
+			if (executionResult)
 			{
-				packet.AddBody(player.myIndex);
-				packet.AddBody(current_position);
-				packet.AddBody(target_position);
-				player.SendMessage(packet);
-			});
+				Player player = GetPlayer(handler.serialNumber);
+				gameBoard.RemoveVirus(current_position, player);
+				gameBoard.AddVirus(target_position, player);
+
+				Packet packet = new Packet((short)Message.PLAYER_MOVED);
+
+				this.players.ForEach(player =>
+				{
+					packet.AddBody(player.myIndex);
+					packet.AddBody(current_position);
+					packet.AddBody(target_position);
+					player.SendMessage(packet);
+				});
+			}
+
 		}
 	}
 }

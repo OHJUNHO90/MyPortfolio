@@ -21,6 +21,24 @@ namespace VirusWarGameTests
 
             //Assert.AreEqual(test1 & test2, true);
             //Assert.AreEqual(test1 & test2, false);
+
+
+            //Assert.AreEqual(Math.Pow(2, 4), 16);
+            //Assert.AreNotEqual(Math.Pow(2, 1), 4.0);
+
+            TestMethod2();
+        }
+
+        [TestMethod]
+        public void TestMethod2()
+        {
+            //ExecuteDecorator decorator = new ExecuteDecorator();
+            //bool executionResult = decorator.Execute(new TheSamePlace(new PreventMovementMoreThanTwoCell(new DuplicateLocation())),
+            //                                          current_position,
+            //                                          target_position,
+            //                                          this.gameBoard);
+
+            //executionResult
         }
     }
 }

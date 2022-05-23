@@ -22,7 +22,7 @@ namespace VirusWarGameServer
 
             if (decorator != null)
             {
-                IsNotError = decorator.Testing();
+                IsNotError = decorator.Testing(datas);
             }
                 
             return IsNotError & CheckLogic(datas);

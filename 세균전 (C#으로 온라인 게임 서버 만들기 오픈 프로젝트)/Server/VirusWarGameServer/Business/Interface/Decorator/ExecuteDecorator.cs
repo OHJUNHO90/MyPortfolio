@@ -8,9 +8,9 @@ namespace VirusWarGameServer
 {
     class ExecuteDecorator
     {
-        public void Execute(iDecorator component = null, params object[] datas)
+        public bool Execute(iDecorator component = null, params object[] datas)
         {
-            component?.Testing(datas);
+            return component.Testing(datas);
         }
     }
 }

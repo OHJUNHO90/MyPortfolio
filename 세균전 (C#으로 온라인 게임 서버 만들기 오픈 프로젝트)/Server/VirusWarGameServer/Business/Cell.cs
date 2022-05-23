@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VirusWarGameServer
 {
-    class Cell
+    public class Cell
     {
         public byte PlayerIndex { set; get; }
         public short Row { set; get; }
