@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace VirusWarGameServer
 {
+    /// <summary>
+    /// 1칸 이상 이동시 이동만 한다.
+    /// </summary>
     class MoveToCell : PlayerAction
     {
         public void Action()

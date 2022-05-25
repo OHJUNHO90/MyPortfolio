@@ -27,7 +27,7 @@ namespace VirusWarGameServer
         {
             messageResolver = new MessageResolver();
             messageHandler  = new MessageHandler(this);
-            sendlockObj     = new object();
+            sendlockObj = new object();
             sendingQueue    = new Queue<Packet>();
             SetGuid();
         }
@@ -84,7 +84,7 @@ namespace VirusWarGameServer
 
         void ReceiveEventProcessing(Const<byte[]> array)
         {
-            Console.WriteLine("ReceiveEventProcessing");
+            //Console.WriteLine("ReceiveEventProcessing");
             messageHandler.OnMessage(array);
         }
 
@@ -98,10 +98,7 @@ namespace VirusWarGameServer
             }
         }
 
-        /// <summary>
-        /// 락 스코프 영역내에서 호출되는 함수
-        /// </summary>
-        private void SendMessage()
+        void SendMessage()
         {
             // 전송이 아직 완료된 상태가 아니므로 데이터만 가져오고 큐에서 제거하진 않는다.
             Packet msg = this.sendingQueue.Peek();

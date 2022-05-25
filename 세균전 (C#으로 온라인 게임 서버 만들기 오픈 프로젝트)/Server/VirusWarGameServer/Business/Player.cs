@@ -61,20 +61,16 @@ namespace VirusWarGameServer
             this.viruses.Remove(position);
         }
 
-        public void ChangeStateToEnteredRoom()
+        public void SetState(PLAYER_STATE state)
         {
-            playerState = PLAYER_STATE.ENTERED_ROOM;
-        }
-
-        public void ChangeStateToLoadingCompleted()
-        {
-            playerState = PLAYER_STATE.LOADING_COMPLETE;
+            playerState = state;
         }
 
         public void SendMessage(Packet packet)
         {
             handler.owner.SendMessage(packet);
         }
+
 
     }
 }

@@ -17,7 +17,7 @@ namespace VirusWarGameServer
 
         public override bool CheckLogic(params object[] datas)
         {
-            return Math.Abs((short)datas[1] - (short)datas[0]) < Math.Pow(numberOfMoveableCell, 4) ? false : true;
+            return Math.Abs( (short)datas[1] - (short)datas[0] ) <= Math.Pow(numberOfMoveableCell, 4) ? true : false;
         }
     }
 }

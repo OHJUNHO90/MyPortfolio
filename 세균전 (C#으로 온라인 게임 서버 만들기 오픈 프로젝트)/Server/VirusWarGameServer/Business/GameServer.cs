@@ -13,7 +13,6 @@ namespace VirusWarGameServer
         Thread eventTreatmentPart;
         AutoResetEvent autoResetEventGameLoop;
         Queue<MessageHandler> packetQueue;
-        List<MessageHandler> matchingWaitingUsers;
         GameRoomManager roomManager;
 
         private GameServer() { }
@@ -83,7 +82,7 @@ namespace VirusWarGameServer
         void ProcessUserOperation(MessageHandler handler)
         {
             Message id = (Message)handler.packet.GetProtocolId();
-            Console.WriteLine("ProcessUserOperation, protocol id " + id);
+            //Console.WriteLine("protocol id " + id);
 
             switch (id)
             {
@@ -104,8 +103,8 @@ namespace VirusWarGameServer
                     }
                     break;
                 case Message.TURN_FINISHED_REQ:
-                    {   
-
+                    {
+                        TURN_FINISHED_REQ(handler);
                     }
                     break;
             }
@@ -117,6 +116,8 @@ namespace VirusWarGameServer
         /// TO DO: 순차적인 아닌 여러 조건에 따라 좀 더 똑똑하게 매칭시키는 로직이 필요해 보임.
         /// </summary>
         /// <param name="handler"></param>
+        
+        List<MessageHandler> matchingWaitingUsers;
         void ENTER_GAME_ROOM_REQ(MessageHandler handler)
         {
             matchingWaitingUsers.Add(handler);

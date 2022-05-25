@@ -50,7 +50,7 @@ namespace VirusWarGameServer
             //(player as Player).ChangeStateToLoadingCompleted();
 
             GameRoom room = FindRoom(handler.serialNumber);
-            FindPlayer(handler.serialNumber)?.ChangeStateToLoadingCompleted();
+            FindPlayer(handler.serialNumber)?.SetState(PLAYER_STATE.LOADING_COMPLETE);
 
             if (!room.IsReady())
             {
@@ -70,9 +70,13 @@ namespace VirusWarGameServer
             FindRoom(handler.serialNumber).OnMovingRequest(handler);
         }
 
+        /// <summary>
+        /// 현재 플레이중인 플레이어 턴 종료
+        /// </summary>
+        /// <param name="handler"></param>
         public void OnTurnFinishedReq(MessageHandler handler)
         {
-            
+            FindRoom(handler.serialNumber).OnFinishedTurn(handler);
         }
 
     }

@@ -34,7 +34,13 @@ namespace VirusWarGameServer
             CellList[position].State = NOT_EMPTY;
             target.AddCell(position);
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        short GetPosition(byte row, byte col)
+        {
+            return (short)(row * COLUMN_COUNT + col);
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -45,14 +51,6 @@ namespace VirusWarGameServer
             CellList[position].State = NOT_EMPTY;
             target.AddCell(position);
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        short GetPosition(byte row, byte col)
-		{
-			return (short)(row * COLUMN_COUNT + col);
-		}
         /// <summary>
         /// 
         /// </summary>

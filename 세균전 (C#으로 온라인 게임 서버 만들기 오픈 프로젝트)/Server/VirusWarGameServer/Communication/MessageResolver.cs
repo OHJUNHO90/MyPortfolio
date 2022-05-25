@@ -45,7 +45,7 @@ namespace VirusWarGameServer
 			while (remainBytes > 0)
 			{
 				bool completed = false;
-				Console.WriteLine("remainBytes" + remainBytes);
+				//Console.WriteLine("remainBytes" + remainBytes);
 				// 헤더만큼 못읽은 경우 헤더를 먼저 읽는다.
 				if (currentPosition < HEADERSIZE)
 				{

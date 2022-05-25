@@ -19,9 +19,9 @@ namespace VirusWarGameServer
 
         public void OnMessage(Const <byte[]> buffer) 
         {
-            byte[] clone = new byte[1024];
-            Array.Copy(buffer.Value, clone, buffer.Value.Length);
-            packet = new Packet(clone);
+            byte[] array = new byte[1024];
+            Array.Copy(buffer.Value, array, buffer.Value.Length);
+            packet = new Packet(array);
 
             GameServer.Instance.EnqueuePacket(this);
         }

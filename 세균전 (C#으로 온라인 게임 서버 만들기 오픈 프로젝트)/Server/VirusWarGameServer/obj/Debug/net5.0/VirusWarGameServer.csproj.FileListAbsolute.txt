@@ -13,4 +13,3 @@ D:\Portfolio\MyPortfolio\세균전 (C#으로 온라인 게임 서버 만들기 �
 D:\Portfolio\MyPortfolio\세균전 (C#으로 온라인 게임 서버 만들기 오픈 프로젝트)\Server\VirusWarGameServer\obj\Debug\net5.0\ref\VirusWarGameServer.dll
 D:\Portfolio\MyPortfolio\세균전 (C#으로 온라인 게임 서버 만들기 오픈 프로젝트)\Server\VirusWarGameServer\obj\Debug\net5.0\VirusWarGameServer.pdb
 D:\Portfolio\MyPortfolio\세균전 (C#으로 온라인 게임 서버 만들기 오픈 프로젝트)\Server\VirusWarGameServer\obj\Debug\net5.0\VirusWarGameServer.genruntimeconfig.cache
-D:\Portfolio\MyPortfolio\세균전 (C#으로 온라인 게임 서버 만들기 오픈 프로젝트)\Server\VirusWarGameServer\obj\Debug\net5.0\VirusWarGameServer.csproj.AssemblyReference.cache
