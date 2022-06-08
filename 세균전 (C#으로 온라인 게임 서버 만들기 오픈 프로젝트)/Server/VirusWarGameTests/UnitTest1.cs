@@ -2,6 +2,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VirusWarGameServer;
 using System.IO;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace VirusWarGameTests
 {
@@ -25,8 +27,6 @@ namespace VirusWarGameTests
 
             //Assert.AreEqual(Math.Pow(2, 4), 16);
             //Assert.AreNotEqual(Math.Pow(2, 1), 4.0);
-
-            TestMethod2();
         }
 
         [TestMethod]

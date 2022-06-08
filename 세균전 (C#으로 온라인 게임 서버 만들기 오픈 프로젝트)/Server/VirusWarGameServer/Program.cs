@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace VirusWarGameServer
 {
@@ -6,7 +8,7 @@ namespace VirusWarGameServer
     {
         static void Main(string[] args)
         {
-            //Game Server 객체 생성
+            Game Server 객체 생성
             GameServer.Instance.Initialize();
 
             //TCP SERVER.
@@ -23,7 +25,6 @@ namespace VirusWarGameServer
                 string input = Console.ReadLine();
                 System.Threading.Thread.Sleep(1000);
             }
-
         }
     }
 }
