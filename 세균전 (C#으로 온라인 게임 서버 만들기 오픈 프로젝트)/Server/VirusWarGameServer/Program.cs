@@ -8,7 +8,7 @@ namespace VirusWarGameServer
     {
         static void Main(string[] args)
         {
-            Game Server 객체 생성
+            //Game Server 객체 생성
             GameServer.Instance.Initialize();
 
             //TCP SERVER.

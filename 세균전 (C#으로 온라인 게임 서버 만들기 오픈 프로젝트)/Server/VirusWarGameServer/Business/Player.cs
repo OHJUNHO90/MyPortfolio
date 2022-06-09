@@ -34,6 +34,16 @@ namespace VirusWarGameServer
 
 
         /// <summary>
+        /// 
+        /// </summary>
+        public Player()
+        {
+            this.handler = null;
+            this.myIndex = 0;
+            viruses = new List<short>();
+        }
+
+        /// <summary>
         /// // 플레이어들을 생성하고 각각 0번, 1번 인덱스를 부여해 준다.
         /// </summary>
         public Player(MessageHandler handler, byte myIndex)

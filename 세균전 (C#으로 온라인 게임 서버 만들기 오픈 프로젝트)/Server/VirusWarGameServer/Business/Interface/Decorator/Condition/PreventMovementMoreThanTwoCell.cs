@@ -7,7 +7,7 @@ using System.Numerics;
 
 namespace VirusWarGameServer
 {
-    class PreventMovementMoreThanTwoCell : ConditionTesting
+    public class PreventMovementMoreThanTwoCell : ConditionTesting
     {
         readonly short numberOfMoveableCell = 2;
         public PreventMovementMoreThanTwoCell(iDecorator decorator = null) : base(decorator)

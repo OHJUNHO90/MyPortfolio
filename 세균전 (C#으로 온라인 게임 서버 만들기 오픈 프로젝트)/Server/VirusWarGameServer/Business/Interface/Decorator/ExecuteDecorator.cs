@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VirusWarGameServer
 {
-    class ExecuteDecorator
+    public class ExecuteDecorator
     {
         public Action OnCompleted { set; get; }
         public Action OnOccurredError { set; get; }

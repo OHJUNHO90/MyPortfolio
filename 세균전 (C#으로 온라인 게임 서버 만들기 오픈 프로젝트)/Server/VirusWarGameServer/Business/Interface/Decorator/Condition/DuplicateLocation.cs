@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace VirusWarGameServer
 {
-    class DuplicateLocation : ConditionTesting
+    public class DuplicateLocation : ConditionTesting
     {
         public DuplicateLocation(iDecorator decorator = null) : base(decorator)
         { 

@@ -82,7 +82,7 @@ namespace VirusWarGameServer
         void ProcessUserOperation(MessageHandler handler)
         {
             Message id = (Message)handler.packet.GetProtocolId();
-            //Console.WriteLine("protocol id " + id);
+            Console.WriteLine("protocol id " + id);
 
             switch (id)
             {
