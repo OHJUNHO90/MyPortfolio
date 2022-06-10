@@ -9,10 +9,81 @@ namespace Programmers
     {
         static void Main(string[] args)
         {
+
         }
 
-        #region 신고 결과 받기
+        #region 모의고사
+        // solution(new int[] { 1, 3, 2, 4, 2 });
+        //static int[] solution(int[] answers)
+        //{
+        //    //[순차적]1번 수포자가 찍는 방식: 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, ...
+        //    //[0, -1, 0, +1, 0, +2 , 0, +3]2번 수포자가 찍는 방식: 2, 1, 2, 3, 2, 4, 2, 5, 2, 1, 2, 3, 2, 4, 2, 5, ...
+        //    //[0, 0, -2, -2, -1, -1 ,+2, +2, +3, +3]3번 수포자가 찍는 방식: 3, 3, 1, 1, 2, 2, 4, 4, 5, 5, 3, 3, 1, 1, 2, 2, 4, 4, 5, 5, ...
+        //    int[] answer = new int[3];
+        //    int[] case1 = new int[] { 1, 2, 3, 4, 5 };
+        //    int[] case2 = new int[] { 2, 1, 2, 3, 2, 4, 2, 5 };
+        //    int[] case3 = new int[] { 3, 3, 1, 1, 2, 2, 4, 4, 5, 5 };
 
+
+        //    for (int i = 0; i < answers.Length; i++)
+        //    {
+        //        if (answers[i].Equals(case1[i % 5])) answer[0]++;
+        //        if (answers[i].Equals(case2[i % 8])) answer[1]++;
+        //        if (answers[i].Equals(case3[i % 10])) answer[2]++;
+        //    }
+
+        //    int max = answer.Max();
+        //    List<int> result = new List<int>();
+
+        //    for (int i = 0; i < answer.Length; i++)
+        //    {
+        //        if (max.Equals(answer[i]))
+        //        {
+        //            result.Add(i + 1);
+        //        }
+        //    }
+
+        //    return result.ToArray();
+        //}
+
+        #endregion
+        #region K번째수
+        //solution( new int[] { 1, 5, 2, 6, 3, 7, 4 },
+        //          new int[,] { { 2, 5, 3 }, { 4, 4, 1 }, { 1, 7, 3 } });
+        //static int[] solution(int[] array, int[,] commands)
+        //{
+        //    int[] answer = new int[commands.GetLength(0)];
+
+        //    int targetIndex = 0;
+        //    int currentIndex = 1;
+        //    int i = 0;
+        //    int j = 0;
+        //    int k = 0;
+
+        //    foreach (int element in commands)
+        //    {
+        //        int remainder = currentIndex % 3;
+
+        //        if      (remainder == 1) i = element;
+        //        else if (remainder == 2) j = element;
+        //        else if (remainder == 0)
+        //        {
+        //            k = element;
+        //            int[] temp = new int[j-i+1];
+        //            Array.Copy(array, i - 1, temp, 0, (j-i+1));
+        //            temp = temp.OrderBy(n => n).ToArray();
+        //            answer[targetIndex] = temp[k - 1];
+        //            targetIndex++;
+        //        }
+
+        //        currentIndex++;
+        //    }
+
+
+        //    return answer;
+        //}
+        #endregion
+        #region 신고 결과 받기
         //solution(new string[] { "muzi", "frodo", "apeach", "neo" },
         //             new string[] { "muzi frodo", "apeach frodo", "frodo neo", "muzi neo", "apeach muzi" },
         //             2);

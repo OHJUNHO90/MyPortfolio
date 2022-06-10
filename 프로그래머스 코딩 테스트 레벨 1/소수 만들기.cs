@@ -1,4 +1,5 @@
 
+
 //solution(new int[] { 1, 2, 7, 6, 4 });
 static int[] array = new int[3];
 static int r = 3;
