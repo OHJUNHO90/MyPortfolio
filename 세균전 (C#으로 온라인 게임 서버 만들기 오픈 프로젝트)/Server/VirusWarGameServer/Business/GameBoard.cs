@@ -9,9 +9,7 @@ namespace VirusWarGameServer
     public class GameBoard
     {
 		public List<Cell> CellList { private set; get; }
-        //List<short> gameBoard = new List<short>();
-		//List<short> tableBoard = new List<short>();
-
+        
 		public readonly byte COLUMN_COUNT = 7;
         readonly byte NO_ONE = 0;
 		readonly short EMPTY_SLOT = 0;

@@ -27,6 +27,8 @@ namespace VirusWarGameServer
                 gameRoom.currentTurnPlayer--;
             }
 
+            //byte body = gameRoom.currentTurnPlayer.Equals(0) ? gameRoom.currentTurnPlayer++ : gameRoom.currentTurnPlayer--;
+
             Packet packet = new Packet((short)Message.START_PLAYER_TURN);
             packet.AddBody(gameRoom.currentTurnPlayer);
 
