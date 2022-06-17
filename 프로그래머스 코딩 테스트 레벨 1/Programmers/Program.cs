@@ -9,9 +9,45 @@ namespace Programmers
     {
         static void Main(string[] args)
         {
-            
-
+            solution(1, 3); 
         }
+
+
+        #region 약수의 개수와 덧셈
+        static int solution(int left, int right)
+        {
+            int answer = 0;
+            for (int i = left; i <= right; i++)
+            {
+                if (IsEvenNumber(i))    answer += i;
+                else                    answer -= i;
+            }
+
+            Console.WriteLine(answer);
+            return answer;
+        }
+
+        static bool IsEvenNumber(int num)
+        {
+            if (num == 1)
+                return false;
+
+            int count = 2;
+            for (int i = 2; i <= Math.Sqrt(num); i++)
+            {
+                int division = num / i;
+                if (num % i == 0)
+                {
+                    count++;
+                    if (num % division == 0 && i != division) count++;
+                }
+            }
+
+            return count % 2 == 0 ? true : false;
+        }
+
+
+        #endregion
 
         #region 체육복
         //solution(7, new int[] { 4,3,2 }, new int[] { 1,6,5 });
