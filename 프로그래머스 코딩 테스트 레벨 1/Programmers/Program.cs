@@ -9,46 +9,76 @@ namespace Programmers
     {
         static void Main(string[] args)
         {
-            solution(1, 3); 
+            
         }
 
-
-        #region 약수의 개수와 덧셈
-        static int solution(int left, int right)
+        #region 3진법 뒤집기
+        //solution(78413450)
+        static int solution(int n)
         {
             int answer = 0;
-            for (int i = left; i <= right; i++)
+            byte[] array = new byte[32];
+            int index = 0;
+
+            while (true)
             {
-                if (IsEvenNumber(i))    answer += i;
-                else                    answer -= i;
+                int divided = n / 3;
+                int rest = n % 3;
+
+                array[index] = (byte)rest;
+
+                if (divided == 0)
+                {
+                    int pow = 0;
+                    for (int i = index; 0 <= i; i--)
+                    {
+                        answer += (int)(Math.Pow(3, pow) * array[i]);
+                        pow++;
+                    }
+                    break;
+                }
+
+                n = divided;
+                index++;
             }
 
-            Console.WriteLine(answer);
             return answer;
         }
-
-        static bool IsEvenNumber(int num)
-        {
-            if (num == 1)
-                return false;
-
-            int count = 2;
-            for (int i = 2; i <= Math.Sqrt(num); i++)
-            {
-                int division = num / i;
-                if (num % i == 0)
-                {
-                    count++;
-                    if (num % division == 0 && i != division) count++;
-                }
-            }
-
-            return count % 2 == 0 ? true : false;
-        }
-
-
         #endregion
+        #region 약수의 개수와 덧셈
+        //solution(1, 3);
+        //static int solution(int left, int right)
+        //{
+        //    int answer = 0;
+        //    for (int i = left; i <= right; i++)
+        //    {
+        //        if (IsEvenNumber(i))    answer += i;
+        //        else                    answer -= i;
+        //    }
 
+        //    Console.WriteLine(answer);
+        //    return answer;
+        //}
+
+        //static bool IsEvenNumber(int num)
+        //{
+        //    if (num == 1)
+        //        return false;
+
+        //    int count = 2;
+        //    for (int i = 2; i <= Math.Sqrt(num); i++)
+        //    {
+        //        int division = num / i;
+        //        if (num % i == 0)
+        //        {
+        //            count++;
+        //            if (num % division == 0 && i != division) count++;
+        //        }
+        //    }
+
+        //    return count % 2 == 0 ? true : false;
+        //}
+        #endregion
         #region 체육복
         //solution(7, new int[] { 4,3,2 }, new int[] { 1,6,5 });
         //static int solution(int n, int[] lost, int[] reserve)
