@@ -11,10 +11,16 @@ namespace VirusWarGameServer
     /// </summary>
     class RuleReferee
     {
-        public RuleReferee()
+        CanPlayMore canPlayMore = null;
+        GameRoom gameRoom       = null;
+        public RuleReferee(GameRoom gameRoom)
         {
-
+            this.gameRoom = gameRoom;
+            canPlayMore = new CanPlayMore(gameRoom.gameBoard);
         }
-
+        public bool CanPlayMore()
+        {
+            return canPlayMore.Execute();
+        }
     }
 }

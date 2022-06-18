@@ -124,6 +124,7 @@ namespace VirusWarGameServer
 
             if (2 <= matchingWaitingUsers.Count)
             {
+                /*룸 생성*/
                 roomManager.CreateRoom(matchingWaitingUsers[0], matchingWaitingUsers[1]);
                 matchingWaitingUsers.Clear();
             }

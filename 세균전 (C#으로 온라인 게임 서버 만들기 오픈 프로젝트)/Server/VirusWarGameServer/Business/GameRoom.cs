@@ -14,7 +14,7 @@ namespace VirusWarGameServer
 		public GameBoard gameBoard { private set; get; }
 		public List<Player> players { private set; get; }
 
-		RuleReferee ruleReferee;
+		RuleReferee referee;
 		public int RoomNumber { set; get; }
 		// 현재 턴을 진행하고 있는 플레이어의 인덱스.
 		public byte currentTurnPlayer { set; get; }
@@ -24,7 +24,7 @@ namespace VirusWarGameServer
 			// 먼저 대기열에 합류된 유저부터 시작
 			currentTurnPlayer = 0;
 			players = new List<Player>();
-			ruleReferee = new RuleReferee();
+			referee = new RuleReferee(this);
 			gameBoard   = new GameBoard();
 		}
 
@@ -57,7 +57,8 @@ namespace VirusWarGameServer
 		/// <param name="handler"></param>
 		public void OnFinishedTurn(MessageHandler handler)
 		{
-			new FinishedTurnEventHandler().Execute(this, handler);
-        }
+			if (referee.CanPlayMore())	new FinishedTurnEventHandler().Execute(this, handler);
+			else					    new GameOver().Execute(this);
+		}
 	}
 }

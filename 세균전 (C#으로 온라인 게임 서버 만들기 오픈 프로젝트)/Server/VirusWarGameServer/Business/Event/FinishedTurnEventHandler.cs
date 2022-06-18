@@ -18,19 +18,10 @@ namespace VirusWarGameServer
                 return;
             }
 
-            if (gameRoom.currentTurnPlayer.Equals(0))
-            {
-                gameRoom.currentTurnPlayer++;
-            }
-            else
-            {
-                gameRoom.currentTurnPlayer--;
-            }
-
-            //byte body = gameRoom.currentTurnPlayer.Equals(0) ? gameRoom.currentTurnPlayer++ : gameRoom.currentTurnPlayer--;
+            byte body = gameRoom.currentTurnPlayer.Equals(0) ? ++gameRoom.currentTurnPlayer : --gameRoom.currentTurnPlayer;
 
             Packet packet = new Packet((short)Message.START_PLAYER_TURN);
-            packet.AddBody(gameRoom.currentTurnPlayer);
+            packet.AddBody(body);
 
             gameRoom.players.ForEach(player =>
             {
