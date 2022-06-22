@@ -9,9 +9,55 @@ namespace Programmers
     {
         static void Main(string[] args)
         {
-
+            
         }
 
+        #region 나누어 떨어지는 숫자 배열
+        //solution(new int[] { 2, 36, 1, 3 }, 1)
+        //static int[] solution(int[] arr, int divisor)
+        //{
+        //    var linq = from element in arr
+        //               where (element % divisor) == 0
+        //               select element;
+
+        //    List<int> answer = linq.ToList();
+        //    if (answer.Count == 0)
+        //        answer.Add(-1);
+
+        //    return answer.OrderBy(e => e).ToArray();
+        //}
+        #endregion
+        #region 가운데 글자 가져오기
+        //solution("abcde")
+        //static string solution(string s)
+        //{
+        //    double startIndex = s.Length % 2.0d;
+        //    return startIndex == 0.0 ? s.Substring((s.Length/2)-1, 2) : s.Substring((s.Length/2), 1);
+        //}
+        #endregion
+        #region 부족한 금액 계산하기
+        //solution(3, 20, 4)
+        //static long solution(int price, int money, int count)
+        //{
+        //    long totalCost = 0;
+        //    for (int i = 1; i <= count; i++)
+        //        totalCost += price * i;
+
+        //    return totalCost < money ? 0 : totalCost - money;
+        //}
+        #endregion
+        #region 나머지가 1이 되는 수 찾기
+        //solution(11); 
+        //static int solution(int n)
+        //{
+        //    for (int i = 2; i < n; i++)
+        //    {
+        //        if (n % i == 1) return i;
+        //    }
+
+        //    return 0;
+        //}
+        #endregion
         #region 최소직사각형
         //Console.WriteLine(solution(new int[,] { { 14, 4 }, { 19, 6 }, { 6, 16 }, { 18, 7 }, { 7, 11 } }));
         //static int solution(int[,] sizes)
