@@ -9,9 +9,25 @@ namespace Programmers
     {
         static void Main(string[] args)
         {
-            
+            int temp = 2147483647;
+            Console.WriteLine(temp);
+            temp = temp + 1;
+            Console.WriteLine(temp);
+            temp = temp + 2147483647;
+            Console.WriteLine(temp);
+            temp = temp + 2;
+            Console.WriteLine(temp);
         }
-
+        
+        #region 두 정수 사이의 합
+        //등차수열의 합 공식 응용 (int가 담을수있는 범위를 연산중 넘어버림)
+        // solution(500, -1000000)
+        //static long solution(int a, int b)
+        //{
+        //    long[] array = new long[] { a, b };
+        //    return (a + b) * (Math.Abs(array[0] - array[1]) + 1) / 2;
+        //}
+        #endregion
         #region 나누어 떨어지는 숫자 배열
         //solution(new int[] { 2, 36, 1, 3 }, 1)
         //static int[] solution(int[] arr, int divisor)
