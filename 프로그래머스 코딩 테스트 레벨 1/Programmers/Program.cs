@@ -12,6 +12,15 @@ namespace Programmers
             
         }
 
+        #region 문자열 내림차순으로 배치
+        //solution("Zbcdefg");
+        //static string solution(string s)
+        //{
+        //    string answer = string.Empty;
+        //    var array = s.ToArray().OrderByDescending(i => i);
+        //    return string.Join("", array);
+        //}
+        #endregion
         #region 문자열 내 마음대로 정렬하기
         //solution(new string[] { "sun", "bed", "car" }, 1);
         //return strings.OrderBy(t => t).ThenBy(t => t[n]).ToArray();
