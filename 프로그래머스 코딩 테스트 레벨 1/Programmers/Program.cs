@@ -9,16 +9,34 @@ namespace Programmers
     {
         static void Main(string[] args)
         {
-            int temp = 2147483647;
-            Console.WriteLine(temp);
-            temp = temp + 1;
-            Console.WriteLine(temp);
-            temp = temp + 2147483647;
-            Console.WriteLine(temp);
-            temp = temp + 2;
-            Console.WriteLine(temp);
+            
         }
-        
+
+        #region 문자열 내 마음대로 정렬하기
+        //solution(new string[] { "sun", "bed", "car" }, 1);
+        //return strings.OrderBy(t => t).ThenBy(t => t[n]).ToArray();
+        //static string[] solution(string[] strings, int n)
+        //{
+        //    var array = from str in strings
+        //                orderby str[n]
+        //                group str by str[n] into g
+        //                select new { data = g };
+
+        //    int index = 0;
+        //    foreach (var item in array)
+        //    {
+        //        var list = item.data.OrderBy(d => d).ToArray();
+
+        //        for (int i = 0; i < list.Length; i++)
+        //        {
+        //            strings[index] = list[i];
+        //            index++;
+        //        }
+        //    }
+
+        //    return strings;
+        //}
+        #endregion
         #region 두 정수 사이의 합
         //등차수열의 합 공식 응용 (int가 담을수있는 범위를 연산중 넘어버림)
         // solution(500, -1000000)
