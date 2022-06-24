@@ -13,11 +13,25 @@ namespace Programmers
         }
 
         #region 소수 찾기
-        public int solution(int n)
-        {
-            int answer = 0;
-            return answer;
-        }
+        // solution(5);
+        //static int solution(int n)
+        //{
+        //    bool[] isPrime = new bool[n + 1];
+        //    Array.Fill(isPrime, true);
+        //    isPrime[0] = false;
+        //    isPrime[1] = false;
+
+        //    for (int i = 2; i * i <= n; i++)
+        //    {
+        //        if (isPrime[i]) 
+        //        {
+        //            for (int j = i * i; j <= n; j += i)    
+        //                isPrime[j] = false;
+        //        }
+        //    }     
+
+        //    return isPrime.Select(t => t).Where(t => t).Count();
+        //}
         #endregion
         #region 서울에서 김서방 찾기
         ////solution(new string[] { "Jane", "Kim" });
