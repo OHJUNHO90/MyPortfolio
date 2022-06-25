@@ -12,6 +12,52 @@ namespace Programmers
             
         }
 
+        #region 시저 암호
+        // 공백문자 32
+        // 대문자 65 ~ 90
+        // 소문자 97 ~ 122
+        //static string solution(string s, int n)
+        //{
+        //    string answer = string.Empty;
+        //    char[] array = s.ToCharArray();
+
+        //    foreach (char c in array)
+        //    {
+        //        if (c.Equals((char)32))
+        //        {
+        //            answer += (char)32;
+        //            continue;
+        //        }
+
+        //        char ascii = (char)(c + n);
+        //        if (c <= 90 && 90 < ascii) ascii = (char)('A' + (ascii % 90) - 1);
+        //        else if (c <= 122 && 122 < ascii) ascii = (char)('a' + (ascii % 122) - 1);
+        //        answer += ascii;
+        //    }
+
+        //    return answer;
+        //}
+        #endregion
+        #region 문자열을 정수로 바꾸기
+        // solution("-1234");
+        //static int solution(string s)
+        //{
+        //    int answer = 0;
+        //    int.TryParse(s, out answer);
+        //    return answer;
+        //}
+        #endregion
+        #region 수박수박수박수박수박수?
+        ////solution(3);
+        //static string solution(int n)
+        //{
+        //    int rest = n % 2;
+        //    string answer = string.Concat(Enumerable.Repeat("수박", (n - rest) / 2));
+        //    if (0 < rest)   answer += "수";
+
+        //    return answer;
+        //}
+        #endregion
         #region 소수 찾기
         // solution(5);
         //static int solution(int n)
