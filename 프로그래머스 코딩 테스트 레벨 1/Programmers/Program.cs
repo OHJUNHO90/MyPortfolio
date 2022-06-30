@@ -9,9 +9,49 @@ namespace Programmers
     {
         static void Main(string[] args)
         {
-            
+
         }
 
+        #region 이상한 문자 만들기
+        //static string solution(string s)
+        //{
+        //    char[] array = s.ToCharArray();
+        //    int index = 0;
+
+        //    for (int i = 0; i < array.Length; i++)
+        //    {
+        //        if (!array[i].Equals((char)32)) 
+        //        {
+        //            if (index == 0 || index % 2 == 0) {
+        //                if ((char)97 <= array[i] && array[i] <= (char)122) 
+        //                    array[i] = (char)(array[i] - 32);
+        //            }
+        //            else {
+        //                if ((char)65 <= array[i] && array[i] <= (char)90)
+        //                    array[i] = (char)(array[i] + 32);
+        //            }
+        //        }
+
+        //        index = array[i].Equals((char)32) ? 0 : index + 1;
+
+        //    }
+
+        //    return string.Join("", array);
+        //}
+        #endregion
+        #region 약수의 합
+        //static int solution(int n)
+        //{
+        //    int answer = 0;
+        //    int divided = n / 2;
+
+        //    for (int i = 1; i <= divided; i++){
+        //        if (n % i == 0) answer += i;
+        //    }
+
+        //    return answer + n;
+        //}
+        #endregion
         #region 시저 암호
         // 공백문자 32
         // 대문자 65 ~ 90
