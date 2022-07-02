@@ -9,9 +9,31 @@ namespace Programmers
     {
         static void Main(string[] args)
         {
-
+            
         }
 
+
+        #region 자연수 뒤집어 배열로 만들기
+        //static int[] solution(long n)
+        //{
+        //    IEnumerable<char> array = n.ToString().ToCharArray().Reverse();
+        //    int[] answer = new int[array.Count()];
+        //    int index = 0;
+        //    foreach (var item in array)
+        //    {
+        //        answer[index] = int.Parse(item.ToString());
+        //        index++;
+        //    }
+
+        //    return answer;
+        //}
+        #endregion
+        #region 자릿수 더하기
+        //static int solution(int n)
+        //{
+        //    return n.ToString().ToCharArray().Sum(t => int.Parse(t.ToString()));
+        //}
+        #endregion
         #region 이상한 문자 만들기
         //static string solution(string s)
         //{
