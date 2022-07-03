@@ -9,10 +9,34 @@ namespace Programmers
     {
         static void Main(string[] args)
         {
-            
+
         }
 
+        #region 정수 제곱근 판별
+        //static long solution(long n)
+        //{
+        //    double val = Math.Sqrt(n);
+        //    double rv = val % 1;
 
+        //    if (rv.Equals(0)) {
+        //        val++;
+        //        return (long)Math.Pow(val, 2);
+        //    }
+        //    else              return -1;
+        //}
+        #endregion
+        #region 정수 내림차순으로 배치하기
+        //static long solution(long n)
+        //{
+        //    string answer = string.Empty;
+        //    var array = n.ToString().ToArray().OrderByDescending(t => t) ;
+
+        //    foreach (var item in array)
+        //        answer += item.ToString();
+
+        //    return long.Parse(answer);
+        //}
+        #endregion
         #region 자연수 뒤집어 배열로 만들기
         //static int[] solution(long n)
         //{
