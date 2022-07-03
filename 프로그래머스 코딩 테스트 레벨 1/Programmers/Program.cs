@@ -9,9 +9,19 @@ namespace Programmers
     {
         static void Main(string[] args)
         {
-
+            
         }
 
+        #region 제일 작은 수 제거하기
+        //static int[] solution(int[] arr)
+        //{
+        //    if (arr.Length <= 1)    return new int[] { -1 };
+        //    List<int> list = new List<int>(arr);
+        //    var target = list.Select((item, idx) => new Tuple<int, int>(item, idx)).Min();
+        //    list.RemoveAt(target.Item2);
+        //    return list.ToArray();
+        //}
+        #endregion
         #region 정수 제곱근 판별
         //static long solution(long n)
         //{
