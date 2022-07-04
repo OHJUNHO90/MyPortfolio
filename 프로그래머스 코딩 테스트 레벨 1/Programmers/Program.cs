@@ -9,9 +9,61 @@ namespace Programmers
     {
         static void Main(string[] args)
         {
-            
+
         }
 
+        #region 콜라츠 추측
+        //static int solution(long num)
+        //{
+        //    if (num == 1) return 0;
+
+        //    int answer = 0;
+        //    while (true)
+        //    {
+        //        if (num % 2 == 0) num = num / 2;
+        //        else num = num * 3 + 1;
+        //        answer++;
+
+        //        if (500 <= answer) return -1;
+        //        else if (num == 1) break;
+        //    }
+
+        //    return answer;
+        //}
+        #endregion
+        #region 최대공약수와 최소공배수
+        //static int[] solution(int n, int m)
+        //{
+        //    int[] answer = new int[2];
+
+        //    for (int i = n; 1 <= i; i--) {
+        //        if (n % i == 0 && m % i == 0) {
+        //            answer[0] = i;
+        //            break;
+        //        }
+        //    }
+
+        //    int index = 1;
+        //    while (true)
+        //    {
+        //        int temp = m * index;
+        //        if ((temp % n) == 0) {
+        //            answer[1] = temp;
+        //            break;
+        //        }
+        //        index++;
+        //    }
+
+        //    return answer;
+        //}
+        #endregion
+        #region 짝수와 홀수
+        //static string solution(int num)
+        //{
+        //    if (num == 0) return "Even";
+        //    return Math.Abs(num) % 2 == 1 ? "Odd" : "Even";
+        //}
+        #endregion
         #region 제일 작은 수 제거하기
         //static int[] solution(int[] arr)
         //{
