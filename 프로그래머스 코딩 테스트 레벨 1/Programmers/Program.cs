@@ -9,10 +9,45 @@ namespace Programmers
     {
         static void Main(string[] args)
         {
-            
+
         }
+        #region 직사각형 별찍기
+        //static void solution()
+        //{
+        //    String[] s;
+        //    Console.Clear();
+        //    s = Console.ReadLine().Split(' ');
 
+        //    int a = Int32.Parse(s[0]);
+        //    int b = Int32.Parse(s[1]);
 
+        //    for (int i = 0; i < b; i++) {
+        //        Console.WriteLine(string.Concat(Enumerable.Repeat("*", a)));
+        //    }
+        //}
+        #endregion
+        #region x만큼 간격이 있는 n개의 숫자
+        //static long[] solution(int x, int n)
+        //{
+        //    long[] answer = new long[n];
+        //    for (long i = 1; i <= n; i++)
+        //        answer[i-1] = x * i;
+
+        //    return answer;
+        //}
+        #endregion
+        #region 행렬의 덧셈
+        //static int[,] solution(int[,] arr1, int[,] arr2)
+        //{
+        //    int[,] answer = new int[arr1.GetLength(0), arr1.GetLength(1)];
+        //    for (int i = 0; i < arr1.GetLength(0); i++){
+        //        for (int j = 0; j < arr1.GetLength(1); j++){
+        //            answer[i, j] = arr1[i, j] + arr2[i, j];
+        //        }
+        //    }
+        //    return answer;
+        //}
+        #endregion
         #region 핸드폰 번호 가리기
         //static string solution(string phone_number)
         //{
