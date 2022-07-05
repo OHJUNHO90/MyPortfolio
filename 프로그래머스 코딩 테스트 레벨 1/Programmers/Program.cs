@@ -9,9 +9,29 @@ namespace Programmers
     {
         static void Main(string[] args)
         {
-
+            
         }
 
+
+        #region 핸드폰 번호 가리기
+        //static string solution(string phone_number)
+        //{
+        //    return string.Concat(Enumerable.Repeat("*", phone_number.Length - 4)) + phone_number.Substring(phone_number.Length - 4, 4);
+        //}
+        #endregion
+        #region 하샤드 수
+        //static bool solution(int x)
+        //{
+        //    var array = x.ToString().ToArray();
+        //    return x % array.Sum(t => int.Parse(t.ToString())) == 0 ? true : false;
+        //}
+        #endregion
+        #region 평균 구하기
+        //static double solution(int[] arr)
+        //{
+        //    return arr.Average();
+        //}
+        #endregion
         #region 콜라츠 추측
         //static int solution(long num)
         //{
