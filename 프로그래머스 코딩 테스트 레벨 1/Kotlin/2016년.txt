@@ -1,0 +1,12 @@
+class Solution {
+    fun solution(a: Int, b: Int): String {
+        val days = listOf("FRI", "SAT", "SUN", "MON", "TUE", "WED", "THU")
+        val lastDays = listOf(31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+        var total = 0
+        for(i in 0..a-1) total += lastDays[i]
+
+        var index = (total - (lastDays[a-1] - b)) % 7
+        if (index == 0) return days[days.size-1]
+        else            return days[index - 1]
+    }
+}

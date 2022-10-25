@@ -1,0 +1,8 @@
+import kotlin.math.*
+
+class Solution {
+    fun solution(n: Int, m: Int): IntArray = intArrayOf(gcd(n, m), lcd(n,m))
+    fun lcd(a:Int, b:Int) = (a * b) / gcd(a,b)
+    tailrec fun gcd(a:Int, b:Int): Int = if(b==0) a else gcd(a, a%b)
+    
+}

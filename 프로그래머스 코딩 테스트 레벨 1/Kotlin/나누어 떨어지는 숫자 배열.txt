@@ -1,0 +1,6 @@
+class Solution {
+    fun solution(arr: IntArray, divisor: Int): IntArray{   
+        val array = arr.filter { p: Int -> p % divisor == 0 }.sorted().toIntArray()
+        return if (array.isEmpty()) intArrayOf(-1) else array
+    }
+}

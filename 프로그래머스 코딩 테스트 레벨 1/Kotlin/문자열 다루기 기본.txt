@@ -1,0 +1,3 @@
+class Solution {
+    fun solution(s: String): Boolean =  s.toIntOrNull() != null && (4 == s.length || s.length == 6)
+}

@@ -1,0 +1,11 @@
+class Solution {
+    fun solution(a: Int, b: Int): Long {
+        var answer: Long = 0
+        val array = arrayOf(a,b).sorted()
+        
+        for(i in array[0]..array[array.size-1])
+            answer += i;
+
+        return answer
+    }
+}

@@ -1,0 +1,7 @@
+class Solution {
+    fun solution(s: String): Int = when(s[0]){
+            '+'  -> s.subSequence(1, s.length).toString().toInt()
+            '-'  -> s.subSequence(1, s.length).toString().toInt() * -1
+            else -> s.toInt()
+    }
+}

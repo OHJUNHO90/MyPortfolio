@@ -1,0 +1,6 @@
+class Solution {
+    fun solution(s: String): String  = when(s.length % 2) {
+            0   -> s.substring(s.length / 2 - 1 until s.length / 2 + 1)
+            else -> s.get(s.length / 2).toString() 
+    }
+}

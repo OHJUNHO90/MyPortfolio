@@ -1,0 +1,12 @@
+import kotlin.math.*
+
+class Solution {
+    fun solution(n: Long) : Long{
+        var sqr = sqrt(n.toDouble())
+        return if(sqr % 1.0 == 0.0){
+            Math.pow(sqr + 1, 2.0).toLong()
+        }else{
+            -1L
+        }
+    }
+}

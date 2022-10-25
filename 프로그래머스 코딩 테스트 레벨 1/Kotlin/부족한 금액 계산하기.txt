@@ -1,0 +1,7 @@
+class Solution {
+    fun solution(price: Int, money: Int, count: Int): Long {        
+        val sum = generateSequence(price.toLong()) { it + price.toLong() }.take(count).sum()
+        return if( money <= sum ) (sum - money)
+               else 0
+    }
+}

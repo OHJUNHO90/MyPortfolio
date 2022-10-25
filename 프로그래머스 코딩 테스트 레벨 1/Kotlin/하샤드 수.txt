@@ -1,0 +1,5 @@
+class Solution {
+    fun solution(x: Int): Boolean {
+        return (x % x.toString().toCharArray().sumOf { it.digitToInt() }) == 0
+    }
+}

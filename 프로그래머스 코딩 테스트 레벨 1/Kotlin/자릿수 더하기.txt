@@ -1,0 +1,3 @@
+class Solution {
+    fun solution(n: Int): Int = n.toString().toCharArray().map { it.code - '0'.code }.sum()
+}

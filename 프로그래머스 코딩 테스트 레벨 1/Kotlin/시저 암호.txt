@@ -1,0 +1,9 @@
+class Solution {
+	fun solution(s: String, n: Int): String  = s.toCharArray().asSequence().map {
+			when(it){
+				in 'A'..'Z' -> if('Z' < it+n) (it + n - 'Z').toChar() + 65 - 1  else it + n
+				in 'a'..'z' -> if('z' < it+n) (it + n - 'z').toChar() + 97 - 1  else it + n
+				else -> it
+			}
+		}.joinToString("")
+}

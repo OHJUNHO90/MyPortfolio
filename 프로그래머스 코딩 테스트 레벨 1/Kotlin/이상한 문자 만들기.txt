@@ -1,0 +1,6 @@
+class Solution {
+    fun solution(s: String): String =
+        s.split(" ").asSequence().map { 
+            it.mapIndexed { index, element -> if(index % 2 == 0) element.uppercase() else element.lowercase() 
+        }.joinToString("")}.joinToString(" ")
+}

@@ -1,0 +1,10 @@
+class Solution {
+    fun solution(n: Int): Int {
+    var answer = 2;
+        while (true) {
+            if(n % answer == 1)
+                return answer
+            answer++;
+        }
+    }
+}
