@@ -1,0 +1,12 @@
+  
+
+"UPDATE PROJECT_SCENE_LIST "
+"SET HASH = @HASH, SCENENAME = @MWObjectName, SCENEINFO = @JSONDATA " +
+"WHERE CONCAT (PID, SCENENAME, HASH) IN ("
+	"SELECT TEMP.RESULT "
+		"FROM ( "
+			"SELECT CONCAT (PID, SCENENAME, HASH) AS RESULT " +
+                        "FROM PROJECT_SCENE_LIST " +
+                        "WHERE PID = @PID AND SCENENAME = @MWObjectName" +
+                    ") TEMP" 
+")"
