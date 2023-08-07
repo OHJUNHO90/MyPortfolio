@@ -1,0 +1,180 @@
+create or replace NONEDITIONABLE PROCEDURE SP_IF_WMS_R_001_ITM_PRC
+(
+  PARAM1 IN CLOB 
+, PARAM2 IN VARCHAR2 
+, PARAM3 OUT VARCHAR2 
+) AS    
+    V_PARAMS                    VARCHAR2(2000);
+    V_USER_ID                   VARCHAR2(2000); 
+    V_OBJECT_NAME               VARCHAR2(2000);  
+    V_JOBID                     VARCHAR2(20);
+    V_TOTAL_LENGTH              NUMBER;
+    V_INDEX                     NUMBER := 1;
+     
+BEGIN
+    
+    V_PARAMS       := PARAM2;
+    V_USER_ID      := SF_GET_INFO(V_PARAMS,'PI_USER_ID');
+    V_OBJECT_NAME  := $$PLSQL_UNIT;    
+
+    /*1. Json에서 JobID 추출*/
+    SELECT jobid
+    INTO V_JOBID
+    FROM JSON_TABLE ( PARAM1, '$.info[*]' COLUMNS ( jobId ) );
+    
+    /*1.1 리스트 길이 가져오기*/
+    SELECT COUNT(*)
+    INTO V_TOTAL_LENGTH
+    FROM JSON_TABLE ( PARAM1, '$.list[*]' COLUMNS ( whCd ) );
+    
+    
+    /*2. Json List 길이 만큼 반복문을 돌면서 순차적으로 1씩 증가한 값으로 업데이트 */  
+    FOR REC IN (
+         SELECT *
+           FROM JSON_TABLE(PARAM1, '$.list[*]' 
+                COLUMNS
+                        whCd,
+                        crud,
+                        strrId,
+                        itemCd,
+                        itemNm,
+                        palletPerBoxQty,
+                        layerPerBoxQty,
+                        palletPerLayerQty,
+                        sCase,
+                        taUnit,
+                        itf,
+                        ean,
+                        width,
+                        depth,
+                        height,
+                        weight,
+                        facedepalletizer,
+                        robot,
+                        facedepalletizerBar,
+                        caseasrsBar,
+                        robottype,
+                        shipLine,
+                        caseasrsRep,
+                        caseasrsMax,
+                        ocdflag,
+                        itemPackingType,
+                        strgStat,
+                        salesCost,
+                        sorterUseYn,
+                        itemMedicalScanYn,
+                        itemFoodHisYn,
+                        itemProductType,
+                        qcYn,
+                        brandCd
+           ) )
+         LOOP
+         /* 반복문을 돌면서 단계별 Insert */
+            INSERT INTO IF_WMS_R_001_ITM(   IF_RCV_ID_WMS, 
+                                            IF_RCV_SEQ_WMS,
+                                            LGCT_CD,
+                                            CUD_TYPE,
+                                            OWNER_CD,
+                                            ITM_CD,
+                                            ITM_NM,
+                                            PLT_LOAD_CNT,
+                                            PLT_LOAD_WIDTH_CNT,
+                                            PLT_LOAD_LVL_CNT,
+                                            CASE_QTY,
+                                            CASE_TA_QTY,
+                                            CASE_BCD_ITF,
+                                            CASE_BCD_EAN,
+                                            CASE_WIDTH,
+                                            CASE_LEN,
+                                            CASE_HGHT,
+                                            CASE_WGT,
+                                            PLTZNG_TYPE,
+                                            ROBOT_TYPE,
+                                            USER_COL2,
+                                            USER_COL1,
+                                            USER_COL3,
+                                            PK_ROUTE,
+                                            CASE_ASRS_RP,
+                                            CASE_ASRS_MAX,
+                                            PWD_SCAN_GOODS_YN,
+                                            ITM_PKG_TYPE,
+                                            SAVE_TYPE,
+                                            SALES_COST,
+                                            SORTER_TYPE_YN,
+                                            MEDICAL_MNG_YN,
+                                            FOOD_HIS_MNG_YN,
+                                            ITM_TYPE,
+                                            QC_ITM_YN,
+                                            BRAND_CD,
+                                            PROC_TYPE,
+                                            PROC_RMK,
+                                            CRT_USR_ID,
+                                            CRT_DTTM,
+                                            UPD_USR_ID,
+                                            UPD_DTTM,
+                                            RCV_DTTM)
+                   VALUES ( V_JOBID, 
+                            V_INDEX,
+                            REC.whCd,
+                            REC.crud,
+                            REC.strrId,
+                            REC.itemCd,
+                            REC.itemNm,
+                            REC.palletPerBoxQty,
+                            REC.layerPerBoxQty,
+                            REC.palletPerLayerQty,
+                            REC.sCase,
+                            REC.taUnit,
+                            REC.itf,
+                            REC.ean,
+                            REC.width,
+                            REC.depth,
+                            REC.height,
+                            REC.weight,
+                            REC.facedepalletizer,
+                            REC.robot,
+                            REC.facedepalletizerBar,
+                            REC.caseasrsBar,
+                            REC.robottype,
+                            REC.shipLine,
+                            REC.caseasrsRep,
+                            REC.caseasrsMax,
+                            REC.ocdflag,
+                            REC.itemPackingType,
+                            REC.strgStat,
+                            REC.salesCost,
+                            REC.sorterUseYn,
+                            REC.itemMedicalScanYn,
+                            REC.itemFoodHisYn,
+                            REC.itemProductType,
+                            REC.qcYn,
+                            REC.brandCd,
+                            'N',
+                            '정상 생성되었습니다.',
+                            V_USER_ID,
+                            SYSDATE,
+                            V_USER_ID,
+                            SYSDATE,
+                            SYSDATE); 
+                            
+            V_INDEX := V_INDEX + 1;         
+         END LOOP;       
+  
+EXCEPTION WHEN OTHERS THEN 
+    GOTO ERROR_LOG;
+
+<<ERROR_LOG>>
+
+    PARAM3 := SQLERRM;
+    
+    SP_SYS_LOG 
+    (  
+         V_OBJECT_NAME
+        ,'E'            
+        ,'Fail to insert' 
+        ,SQLERRM        
+        ,NULL           
+        ,V_USER_ID     
+    );
+
+END;

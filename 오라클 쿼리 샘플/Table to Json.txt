@@ -1,0 +1,67 @@
+create or replace NONEDITIONABLE PROCEDURE SP_IF_WMS_S_012_STK_INFO_PRC 
+( 
+  PARAM1 IN VARCHAR2 
+, PARAM2 OUT CLOB 
+) AS
+    V_PARAMS                    VARCHAR2(2000);
+    V_OBJECT_NAME               VARCHAR2(2000);  
+    V_USER_ID                   VARCHAR2(2000);
+    
+BEGIN
+
+    V_PARAMS       := PARAM1;
+    V_OBJECT_NAME  := $$PLSQL_UNIT;
+    V_USER_ID      := SF_GET_INFO(V_PARAMS,'PI_USER_ID');
+    
+    SELECT JSON_OBJECT  (   KEY 'info' IS JSON_OBJECT ( KEY 'sPath' IS 'WCS',KEY 'jobId' IS (     
+                                                                                               SELECT MIN(IF_SND_ID_WMS )
+                                                                                               FROM IF_WMS_S_012_STK_INFO 
+                                                                                               WHERE PROC_TYPE = 'N' ) 
+                                                                                             ),
+                            KEY 'list' IS (
+                                            SELECT JSON_ARRAYAGG (   
+                                                                    JSON_OBJECT (
+                                                                                    KEY 'whcd' VALUE LGCT_CD, 
+                                                                                    KEY 'storerkey' VALUE OWNER_CD,
+                                                                                    KEY 'whseid' VALUE PLNT,
+                                                                                    KEY 'strLoc' VALUE STO_LOC,
+                                                                                    KEY 'sku' VALUE ITM_CD,
+                                                                                    KEY 'lot' VALUE WMS_LOT,
+                                                                                    KEY 'rawlot' VALUE CHK_LOT,
+                                                                                    KEY 'dateproducted' VALUE MNFT_DATE,
+                                                                                    KEY 'useLimitDate' VALUE USE_TERM,
+                                                                                    KEY 'qcrequired' VALUE QC_TYPE,
+                                                                                    KEY 'palletId' VALUE PLT_ID,
+                                                                                    KEY 'location' VALUE WMS_LOC,
+                                                                                    KEY 'qty' VALUE LOAD_QTY,
+                                                                                    KEY 'receiptdate' VALUE PA_YMDHMS,
+                                                                                    KEY 'editdate' VALUE UPD_YMDHMS
+                                                                                )
+                                                                 )
+                                              FROM IF_WMS_S_012_STK_INFO
+                                              WHERE PROC_TYPE = 'N'
+                                              AND IF_SND_ID_WMS = ( SELECT MIN(IF_SND_ID_WMS) 
+                                                                    FROM IF_WMS_S_012_STK_INFO 
+                                                                    WHERE PROC_TYPE = 'N')
+                                          )    
+                        )
+    INTO PARAM2
+    FROM DUAL;  
+    
+    EXCEPTION WHEN OTHERS THEN 
+        GOTO ERROR_LOG;
+
+
+<<ERROR_LOG>>
+
+    SP_SYS_LOG 
+    (  
+         V_OBJECT_NAME
+        ,'E'            
+        ,'Fail to insert' 
+        ,SQLERRM        
+        ,NULL           
+        ,V_USER_ID     
+    );
+    
+END;
