@@ -14,7 +14,6 @@ abstract public class Container<T> : IDisposable, IContainer
                 if (rows != null)
                 {
                     rows.Clear();
-                    //rows = null;
                 }
             }
             disposedValue = true;
