@@ -40,12 +40,10 @@ public void Receive()
 
 				if (node != null)
 				{
-					/*다이렉트 이벤트 발생, 직접 실행*/
 					node.Excute(eventArgs);
 				}
 				else
 				{
-					/*옵저버 패턴, 버블링 이벤트 발생)*/
 					MainSubject.Instance.Excute(eventArgs);
 				}
 				

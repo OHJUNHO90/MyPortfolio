@@ -47,7 +47,7 @@ public class MsgData
 		}
 	}
 	
-	private void SetHeader(byte[] buffer, Dictionary<string, VCCSocket.HeaderInfo> info)
+	public void SetHeader(byte[] buffer, Dictionary<string, VCCSocket.HeaderInfo> info)
 	{
 		int offset = 0;
 		foreach (KeyValuePair<string, VCCSocket.HeaderInfo> pair in info)
@@ -97,19 +97,16 @@ public class MsgData
 	/// <summary>
 	/// 
 	/// </summary>
-	public void SetBody(byte[] buffer)
+	public void SetBody(byte[] buffer, int msgLength)
 	{
-		string msgId = string.Empty;
-		GetHeader<string>("MSG_ID", ref msgId);
 
-		List<MsgbodyFormat> list = VCCSocketManager.Instance().MessageDictionary(msgId);
-		int index = headerLength;
+		List<MsgbodyFormat> list = GetMessageStructure();
 
 		if (list == null) {
-			Debug.Log("MESSAGE BODY IS NOT DEFINED" + msgId, logType.TcpIP);
-			return;
+			return null;
 		}
 
+		int index = headerLength;
 		for (int i = 0; i < list.Count; i++)
 		{
 			byte[] temp = new byte[list[i].VAL_LEN];
@@ -151,9 +148,41 @@ public class MsgData
 	/// <summary>
 	///
 	/// </summary>
-	public void SetMsgData(byte[] buffer, Dictionary<string, VCCSocket.HeaderInfo> info)
-	{
-		SetHeader(buffer, info);
-		SetBody(buffer);
+	public void VerifyReceivedMsgLength(int bufferSize){
+
+		List<MsgbodyFormat> msg = GetMessageStructure();
+
+		if(msg == null)
+		{
+			return null;
+		}
+
+		int messageLength = headerLength;
+
+		for(int i=0; i < msg.length; i++)
+		{
+			messageLength += list[i].VAL_LEN;
+		}
+
+		if(bufferSize < messageLength){
+			Debug.Log("Packet length is not long enough." + msgId, logType.TcpIP);
+			return null;
+		}
+	}
+
+
+	public List<MsgbodyFormat> GetMessageStructure(){
+
+		string msgId = string.Empty;
+		GetHeader<string>("MSG_ID", ref msgId);
+
+		List<MsgbodyFormat> list = VCCSocketManager.Instance().MessageDictionary(msgId);
+
+		if (list == null) {
+			Debug.Log("MESSAGE BODY IS NOT DEFINED" + msgId, logType.TcpIP);
+			return null;
+		}
+
+		return list;
 	}
 }

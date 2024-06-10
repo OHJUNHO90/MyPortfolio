@@ -47,7 +47,23 @@ public class MyTCPClient : MySocket
 					MsgData msg = new MsgData(headerLength, (index - headerLength));
 					byte[] array = new byte[index];
 					Array.Copy(buffer, offset, array, 0, index);
-					msg.SetMsgData(array, headerInfo);
+
+					msg.SetHeader(array, headerInfo);
+					bool unpromisedMessage = msg.VerifyReceivedMsgLength(index);
+
+					if(unpromisedMessage){
+					//bool unpromisedMessage = msg.SetMsgData(array, headerInfo, index);
+					/*만약 수신된 일련의 데이터가 완성된 Packet이 아닌 상황을 위한 대기 로직 */
+					// -- 수신된 패킷 길이 확인
+					// -- 하나의 패킷을 나눠서 보내지 않겠다는 사전 협의를 기반으로 만들어진 로직
+
+						Send("메세지 실패 내용 전달", "실패한 메세지 아이디");
+						break;
+					}
+
+					msg.SetBody(array);
+
+
 					receiveMsg.Add(msg);
 					index = -1;
 					offset = i + 1;
